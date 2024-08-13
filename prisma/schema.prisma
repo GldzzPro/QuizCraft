@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique @db.VarChar(255)
+  username  String   @db.VarChar(50)
+  password  String
+  role      Role     @default(USER)
+  score     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  quizzes   Quiz[]
+}
+
+model Quiz {
+  id          String     @id @default(cuid())
+  title       String     @db.VarChar(50)
+  duration    Int
+  description String?     @db.VarChar(255)
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
+  questions   Question[] // Relation to Question
+  difficulty  Difficulty @default(MEDIUM)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Question {
+  id        String   @id @default(cuid())
+  text      String   @db.Text
+  quizId    String
+  quiz      Quiz     @relation(fields: [quizId], references: [id])
+  answers   Answer[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Answer {
+  id         String   @id @default(cuid())
+  isCorrect  Boolean  @default(false)
+  text       String   @db.Text
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}

@@ -1,7 +1,5 @@
 import QuizDetails from "@/components/admin/quizzes/QuizDetails";
-import { capitalizeFirstLetter, toMinutes } from "@/helpers/formatData";
 import { getQuestionsById, getQuizById } from "@/repositories/quiz.repository";
-import { Difficulty } from "@prisma/client";
 
 export default async function QuizzesDetailPages({
   params: { slug },

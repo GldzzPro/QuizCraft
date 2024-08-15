@@ -4,7 +4,7 @@ import { createUser, findUserEmail } from "@/repositories/user.repository";
 import { Role } from "@prisma/client";
 import { hashPassword } from "../auth/register/route";
 export async function POST(req: NextRequest) {
-  const { email, username, password, confirmPassword, roles, scores } =
+  const { email, username, password, confirmPassword, roles, score } =
     await req.json();
 
   if (password !== confirmPassword) {
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       username,
       password: await hashPassword(password),
       role: roles ?? Role.USER,
-      score: scores ?? 0,
+      score: score ?? 0,
     });
 
     return NextResponse.json(

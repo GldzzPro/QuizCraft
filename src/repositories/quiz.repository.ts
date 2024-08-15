@@ -63,7 +63,7 @@ export const getQuizById = async ({ id }: { id: string }) => {
       id,
     },
     select: {
-      id:true,
+      id: true,
       title: true,
       description: true,
       difficulty: true,
@@ -102,6 +102,40 @@ export const patchQuiz = async ({
       description,
       difficulty,
       duration,
+    },
+  });
+};
+
+export const createQuestionById = async ({
+  text,
+  quizId,
+  answers,
+}: {
+  text: string;
+  quizId: string;
+  answers: {
+    text: string;
+    isCorrect: boolean;
+  }[];
+}) => {
+  return await prisma.question.create({
+    data: {
+      text,
+      quizId,
+      answers: {
+        create: answers.map(({ text, isCorrect }) => ({
+          text,
+          isCorrect,
+        })),
+      },
+    },
+  });
+};
+
+export const deleteSpecificQuestion = async ({ id }: { id: string }) => {
+  return await prisma.question.delete({
+    where: {
+      id,
     },
   });
 };

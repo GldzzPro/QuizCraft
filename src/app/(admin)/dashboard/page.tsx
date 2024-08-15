@@ -24,7 +24,7 @@ export default async function DasboardPages() {
 
         <div className="flex flex-wrap gap-4">
           <div className="flex-grow overflow-x-auto">
-            <h1 className="text-xl md:text-4xl font-bold sm:hidden">Users</h1>
+            <h1 className="text-xl md:text-4xl font-bold sm:hidden mb-4">Users: </h1>
             {users.length > 0 ? (
               <TableDashboard />
             ) : (
@@ -34,7 +34,7 @@ export default async function DasboardPages() {
             )}
           </div>
 
-          <div className="flex flex-col xl:flex-grow-0 flex-grow gap-2 h-[600px] col-span-2 overflow-y-auto no-scrollbar">
+          <div className="flex flex-col 2xl:flex-grow-0 flex-grow gap-2 h-[600px] col-span-2 overflow-y-auto no-scrollbar">
             {quizzes.map((quiz) => (
               <CardQuizHomePages
                 key={quiz.id}

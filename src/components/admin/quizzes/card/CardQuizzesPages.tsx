@@ -13,9 +13,6 @@ import Link from "next/link";
 import { Difficulty } from "@prisma/client";
 import { Button } from "../../../ui/button";
 import PopOver from "../../core/AlertDialog";
-import { useRouter } from "next/navigation";
-import { deleteQuizById } from "@/repositories/quiz.repository";
-import { toast } from "../../../ui/use-toast";
 import useDeleteQuiz from "@/hooks/quizzes/useDeleteQuiz";
 const CardQuizzes = (quiz: {
   id: string;

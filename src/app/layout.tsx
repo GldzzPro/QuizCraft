@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { NextauthProviders } from "../helpers/providers";
+import { NextauthProviders } from "../lib/AurhProviders";
 
 import { Inter as FontSans } from "next/font/google";
 

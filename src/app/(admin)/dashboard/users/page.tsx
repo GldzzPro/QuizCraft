@@ -2,9 +2,10 @@
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
-import TableDashboardUser from "@/components/fragments/TableDashboardUser";
+
 import { getALlDetailUser } from "@/repositories/user.repository";
-import CreateButton from "@/components/core/CreateButton";
+import CreateButton from "@/components/admin/core/CreateButton";
+import TableDashboardUser from "@/components/admin/user/table/TableUserPages";
 
 export default async function UsersPage() {
   const users = await getALlDetailUser();

@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import SigninForm from "@/components/fragments/SigninForm";
+import SigninForm from "@/components/admin/fragments/auth/SigninForm";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { redirect } from "next/navigation";

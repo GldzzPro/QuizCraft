@@ -1,8 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import Breadcrumbs from "@/components/core/Breadcrumbs";
-import Profile from "@/components/core/Profile";
-import NavbarMobile from "@/components/fragments/navigations/NavbarMobile";
-import Sidebar from "@/components/fragments/navigations/Sidebar";
+import Breadcrumbs from "@/components/admin/core/Breadcrumbs";
+import Profile from "@/components/Profile";
+import NavbarMobile from "@/components/admin/fragments/navigations/NavbarMobile";
+import Sidebar from "@/components/admin/fragments/navigations/Sidebar";
 
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";

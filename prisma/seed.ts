@@ -17,9 +17,12 @@ async function main() {
   });
   console.log({ user });
 
+
   const quizzes = await prisma.quiz.create({
     data: {
       title: "Physics",
+      description: "Test your knowledge of physics",
+      difficulty: "MEDIUM",
       duration: 60,
       user: {
         connect: { id: user.id },
@@ -50,6 +53,16 @@ async function main() {
           },
         ],
       },
+    },
+  });
+
+
+  const questions = await prisma.question.findMany({
+    where: {
+      quizId: quizzes.id,
+    },
+    include: {
+      answers: true,
     },
   });
 

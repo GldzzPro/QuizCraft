@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-import { createUserRegister, findUserEmail } from "@/repositories/user.repository";
+import bcrypt from 'bcrypt';
+
+import {
+  createUserRegister,
+  findUserEmail,
+} from "@/repositories/user.repository";
+export const hashPassword = async (password: string)=> {
+  const salt = await bcrypt.genSalt();
+  return await bcrypt.hash(password, salt)
+}
 export async function POST(req: NextRequest) {
   const { email, username, password, confirmPassword } = await req.json();
   const passwordMatch = password === confirmPassword;
@@ -24,12 +32,10 @@ export async function POST(req: NextRequest) {
     );
   }
   try {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
     const user = await createUserRegister({
       email,
       username,
-      password: hashedPassword,
+      password: await hashPassword(password),
     });
 
     return NextResponse.json(

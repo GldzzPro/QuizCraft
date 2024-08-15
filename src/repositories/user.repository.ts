@@ -1,8 +1,7 @@
 "use server";
-import prisma from "@/helpers/prisma";
+import prisma from "@/lib/prisma";
 import { Role } from "@prisma/client";
-
-
+import { notFound } from "next/navigation";
 
 export async function findUserEmail(data: { email: string }) {
   return await prisma.user.findUnique({
@@ -40,21 +39,16 @@ export async function getParticularDetailUser() {
     },
   });
 }
-
-export async function getUserById({ id }: { id: string }) {
-  return await prisma.user.findFirst({
-    where: {
-      id,
-    },
-    select: {
-      id: true,
-      username: true,
-      email: true,
-      score: true,
-      createdAt: true,
-      updatedAt: true,
-    },
+export async function getUserById(id: string) {
+  const user = await prisma.user.findUnique({
+    where: { id },
   });
+
+  if (!user) {
+    notFound(); // Redirect to 404 if user is not found
+  }
+
+  return user;
 }
 
 export async function getALlDetailUser() {
@@ -72,39 +66,33 @@ export async function getALlDetailUser() {
     },
   });
 }
+
+// Function to create a user
 export async function createUser({
   email,
   username,
   password,
-  confirmPassword,
   role,
   score,
 }: {
   email: string;
   username: string;
   password: string;
-  confirmPassword: string;
   role: Role;
   score: number;
 }) {
-  // Ensure password and confirmPassword match
-  if (password !== confirmPassword) {
-    throw new Error("Passwords do not match");
-  }
-
-  // Create the user without confirmPassword
   return await prisma.user.create({
     data: {
       email,
       username,
       password,
-      role, // Pass `role` here
-      score, // Pass `score` here
+      role,
+      score,
     },
   });
 }
 
-export async function updateUser({
+export async function patchUser({
   id,
   email,
   username,

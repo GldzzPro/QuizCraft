@@ -1,11 +1,10 @@
-
 export function percentageNumber(num: number) {
-    return new Intl.NumberFormat("en-US", { 
-      style: "percent",
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2,
-    }).format(num / 100);
-  }
+  return new Intl.NumberFormat("en-US", {
+    style: "percent",
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  }).format(num / 100);
+}
 
 export function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -16,5 +15,14 @@ export function formatDate(dateString: string) {
     day: "numeric",
     hour: "numeric",
     minute: "numeric",
-  })
+  });
 }
+
+export const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+export const toMinutes = (num: number) =>
+  num % 60 === 0
+    ? `${num / 60} min`
+    : `${Math.floor(num / 60)} min ${num % 60} sec`;

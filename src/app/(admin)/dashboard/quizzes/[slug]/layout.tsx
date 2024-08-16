@@ -30,11 +30,13 @@ export default async function Quiz({
             <h2 className="text-lg text-muted-foreground">
               {quizData?.description}
             </h2>
-            <h3 className="text-muted-foreground">Difficulty: {difficulty}</h3>
+            <h3 className="text-muted-foreground">Difficulty: 
+              {difficulty}
+              </h3>
             <h4 className="text-muted-foreground">Duration: {minutes}</h4>
           </div>
           <CreateButton
-            path={`/quizzes/questions/${slug}`}
+            path={`/quizzes/questions/create/${quizData?.id}`}
             text="Add Questions"
           />
         </header>

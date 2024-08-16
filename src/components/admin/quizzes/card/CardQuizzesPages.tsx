@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React  from "react";
 import {
   Card,
   CardContent,
@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../ui/card";
-import { capitalizeFirstLetter } from "@/helpers/formatData";
 import Link from "next/link";
 import { Difficulty } from "@prisma/client";
 import { Button } from "../../../ui/button";
@@ -63,7 +62,7 @@ const CardQuizzes = (quiz: {
                 Difficulty
               </div>
               <div className="text-2xl font-bold">
-                {capitalizeFirstLetter(quiz.difficulty)}
+                {/* {capitalizeFirstLetter(quiz.difficulty)} */}
               </div>
             </div>
           </div>

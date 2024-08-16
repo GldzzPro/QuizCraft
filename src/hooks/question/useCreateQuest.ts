@@ -1,5 +1,5 @@
 import { toast } from "@/components/ui/use-toast";
-import { createQuestionById } from "@/repositories/quiz.repository";
+import { createQuestionByQuizId } from "@/repositories/quiz.repository";
 import { QuestSchema } from "@/schemas/QuestSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -59,7 +59,7 @@ export default function useCreateQuest({ quizId }: { quizId: string }) {
     }
 
     try {
-      const res = await createQuestionById({ quizId, text, answers });
+      const res = await createQuestionByQuizId({ quizId, text, answers });
       if (!res) {
         toast({
           variant: "destructive",
@@ -71,7 +71,7 @@ export default function useCreateQuest({ quizId }: { quizId: string }) {
       toast({
         variant: "default",
         title: "Success",
-        description: "Question created successfully",
+        description: "Question created successfully, you can add more, or back to the quiz",
       });
     } catch (error) {
       console.error("Failed to submit question:", error);

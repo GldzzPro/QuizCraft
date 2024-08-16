@@ -8,7 +8,7 @@ export default async function QuizzesDetailPages({
 }) {
   const questionsData = await getQuestionsById({ id: slug });
   const processedQuestionsData = questionsData.map((question, index) => ({
-    id: question.id ?? `question-${index}`, // Use the provided id if available, otherwise generate a fallback
+    id: question.id ?? `question-${index}`, 
     text: question.text,
     answers: question.answers,
   }));

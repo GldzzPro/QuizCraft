@@ -36,10 +36,8 @@ export default function useCreateQuiz() {
           description: "Something went wrong, please login again",
         });
         signOut();
-        setIsLoading(false);
         return;
       }
-
       try {
         const quiz = await postQuiz({
           title,
@@ -48,7 +46,7 @@ export default function useCreateQuiz() {
           duration,
           userId: userId,
         });
-      const quizId = await findQuizById(quiz.id);
+        const quizId = await findQuizById(quiz.id);
 
         if (quiz) {
           toast({

@@ -10,7 +10,7 @@ export default async function quizzes() {
         <h2 className="text-2xl font-bold">Quizzes</h2>
         <CreateButton path="/quizzes/create" text={" Create Quiz"} />
       </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {quizzes.map((quiz) => {
           return (
             <CardQuizzes key={quiz.id} {...quiz} questions={quiz.questions} />

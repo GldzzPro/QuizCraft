@@ -11,6 +11,7 @@ import {
 import useDeleteQuest from "@/hooks/question/useDeleteQuest";
 import PopOver from "../../core/AlertDialog";
 import { AnswerItem } from "./AnswersItem";
+import Link from 'next/link';
 
 type QuestionProps = {
   id: string;
@@ -67,7 +68,6 @@ function QuestionCard({ question }: QuestionCardProps) {
         <CardHeader>
           <div className="flex justify-between items-center">
             <CardTitle className="text-sm sm:text-lg ">{question.text}</CardTitle>
-           
           </div>
         </CardHeader>
         <CardContent>
@@ -79,9 +79,11 @@ function QuestionCard({ question }: QuestionCardProps) {
         </CardContent>
         <CardFooter className="flex justify-between">
           <div className="flex gap-2">
+            <Link href={`/dashboard/quizzes/questions/${question.id}`}>
             <Button size="sm" variant="outline">
               Edit
             </Button>
+            </Link>
             <Button size="sm" variant="ghost"  onClick={handleDeleteClick}>
               Delete
             </Button>

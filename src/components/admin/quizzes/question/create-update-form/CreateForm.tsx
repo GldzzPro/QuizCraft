@@ -21,11 +21,11 @@ import {
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useCreateQuest from "@/hooks/question/useCreateQuest";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function QuestionAndAnswerForm({ quizId }: { quizId: string }) {
   const { form, onSubmit, isLoading } = useCreateQuest({ quizId });
-
+  const router = useRouter();
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} className="space-y-8">
@@ -90,17 +90,11 @@ export function QuestionAndAnswerForm({ quizId }: { quizId: string }) {
                                   required
                                 />
                               </FormControl>
-                              <FormMessage>
-                                {
-                                  form.formState.errors.answers?.[index]?.text
-                                    ?.message
-                                }
-                              </FormMessage>
                             </div>
                           </FormItem>
                         ))}
                         <FormMessage>
-                          {form.formState.errors.answers?.message}
+                          {form.formState.errors.answers?.message }
                         </FormMessage>
                       </RadioGroup>
                     </>
@@ -119,11 +113,15 @@ export function QuestionAndAnswerForm({ quizId }: { quizId: string }) {
                 ? "Loading..."
                 : "Add Question"}
             </Button>
-            <Link href={`/dashboard/quizzes/${quizId}`}>
-              <Button type="button" variant="outline" disabled={isLoading}>
-                Back
-              </Button>
-            </Link>
+
+            <Button
+              onClick={() => (form.reset(), router.back())}
+              type="button"
+              variant="outline"
+              disabled={isLoading}
+            >
+              Back
+            </Button>
           </CardFooter>
         </Card>
       </form>

@@ -5,5 +5,7 @@ export default function CreateQuestionsPage({
 }: {
   params: { slug: string };
 }) {
+  console.log(slug);
+  
   return <QuestionAndAnswerForm quizId={slug} />;
 }

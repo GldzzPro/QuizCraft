@@ -26,3 +26,15 @@ export const toMinutes = (num: number) =>
   num % 60 === 0
     ? `${num / 60} min`
     : `${Math.floor(num / 60)} min ${num % 60} sec`;
+
+
+export const removeUselessChars = (str: string[])=>{
+  const isCuid = (segment: string): boolean => {
+    const cuidRegex = /^[a-zA-Z0-9]{25}$/;
+    return cuidRegex.test(segment);
+  };
+  
+  return str.filter(
+    (path) => !path.startsWith("create") && !isCuid(path)
+  );
+}

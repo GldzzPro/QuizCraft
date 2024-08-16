@@ -108,7 +108,7 @@ export const patchQuiz = async ({
   });
 };
 
-export const createQuestionById = async ({
+export const createQuestionByQuizId = async ({
   text,
   quizId,
   answers,
@@ -133,7 +133,7 @@ export const createQuestionById = async ({
     },
   });
 };
-export const deleteSpecificQuestion = async (id: string) => {
+export const deleteSpecificQuestionByQuizId = async (id: string) => {
   try {
     return await prisma.question.delete({
       where: { id },
@@ -148,7 +148,61 @@ export const deleteSpecificQuestion = async (id: string) => {
 export const findQuizById = async (id: string) => {
   return await prisma.quiz.findFirst({
     where: {
-      id
+      id,
+    },
+  });
+};
+
+export const getSpesificQuestionById = async ({ id }: { id: string }) => {
+  return await prisma.question.findFirst({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      text: true,
+      answers: {
+        select: {
+          id: true,
+          text: true,
+          isCorrect: true,
+        },
+      },
+    },
+  });
+};
+
+
+type SpecifiedQuestion = {
+  id: string;
+  text: string;
+  answers: {
+    id: string;
+    text: string;
+    isCorrect: boolean;
+  }[];
+};
+
+export const updateSpecificQuestionByQuizId = async ({
+  id,
+  text,
+  answers,
+}: SpecifiedQuestion) => {
+  return await prisma.question.update({
+    where: {
+      id,
+    },
+    data: {
+      text,
+      answers: {
+        update: answers.map((answer) => ({
+          where: { id: answer.id }, 
+          data: {
+            text: answer.text,
+            isCorrect: answer.isCorrect,
+          },
+        })),
+      },
     },
   });
 };

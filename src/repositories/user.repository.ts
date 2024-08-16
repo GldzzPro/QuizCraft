@@ -46,7 +46,7 @@ export async function getUserById(id: string) {
   });
 
   if (!user) {
-    notFound(); // Redirect to 404 if user is not found
+    notFound(); 
   }
 
   return user;
@@ -97,13 +97,13 @@ export async function patchUser({
   id,
   email,
   username,
-  role, // Adjust to accept `role`
-  score, // Adjust to accept `score`
+  role, 
+  score, 
 }: {
   id: string;
   email: string;
-  username: string; // This should be a string, not a number
-  role: Role; // Corrected from `roles` to `role`
+  username: string; 
+  role: Role; 
   score: number;
 }) {
   return await prisma.user.update({
@@ -128,7 +128,6 @@ export async function deleteUser({ id }: { id: string }) {
 }
 
 export const checkUserExist = async (userId?: string) => {
-  console.log(`Checking user with ID: ${userId}`);
   return await prisma.user.findUnique({
     where: {
       id: userId,

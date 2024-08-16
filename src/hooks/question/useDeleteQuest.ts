@@ -1,5 +1,5 @@
 import { toast } from "@/components/ui/use-toast";
-import { deleteSpecificQuestion } from "@/repositories/quiz.repository";
+import { deleteSpecificQuestionByQuizId } from "@/repositories/quiz.repository";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -9,7 +9,7 @@ export default function useDeleteQuest({ id }: { id: string }) {
 
   const handleDelete = async () => {
     try {
-      const result = await deleteSpecificQuestion(id);
+      const result = await deleteSpecificQuestionByQuizId(id);
       if (result) {
         toast({
           title: "Success",

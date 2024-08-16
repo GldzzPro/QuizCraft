@@ -1,53 +1,76 @@
+import { createUser } from "@/repositories/user.repository";
 import { PrismaClient } from "@prisma/client";
 import { hash } from "bcrypt";
 
 const prisma = new PrismaClient();
-
 async function main() {
   const password = await hash("12345", 10);
-  const user = await prisma.user.upsert({
-    where: { email: "hello@example.com" },
+
+  // Creating users with different emails and usernames
+  const user1 = await prisma.user.create({
+    data: {
+      email: "user1@example.com",
+      username: "User One",
+      password,
+      role: "USER",
+      score: 80,
+    },
+  });
+
+  const user2 = await prisma.user.upsert({
+    where: {email: "hello@example.com"},
     update: {},
-    create: {
+    create:{
       email: "hello@example.com",
       username: "John Doe",
       password,
       role: "ADMIN",
+      score: 0,
+    }
+  })
+  
+
+  const user3 = await prisma.user.create({
+    data: {
+      email: "user3@example.com",
+      username: "User Three",
+      password,
+      role: "USER",
+      score: 70,
     },
   });
-  console.log({ user });
 
 
-  const quizzes = await prisma.quiz.create({
+  const quiz2 = await prisma.quiz.create({
     data: {
-      title: "Physics",
-      description: "Test your knowledge of physics",
+      title: "Chemistry Quiz",
+      description: "Explore your knowledge of chemistry",
       difficulty: "MEDIUM",
-      duration: 60,
+      duration: 45,
       user: {
-        connect: { id: user.id },
+        connect: { id: user1.id },
       },
       questions: {
         create: [
           {
-            text: "How much is the gravitational force on Earth?",
+            text: "What is the chemical symbol for gold?",
             answers: {
               create: [
-                { text: "9.8 m/s^2", isCorrect: true },
-                { text: "9 m/s^2", isCorrect: false },
-                { text: "10 m/s^2", isCorrect: false },
-                { text: "9,4 m/s^2", isCorrect: false },
+                { text: "Au", isCorrect: true },
+                { text: "Ag", isCorrect: false },
+                { text: "Pb", isCorrect: false },
+                { text: "Fe", isCorrect: false },
               ],
             },
           },
           {
-            text: "Who is the father of physics?",
+            text: "Which gas is most abundant in the Earth's atmosphere?",
             answers: {
               create: [
-                { text: "Albert Einstein", isCorrect: false },
-                { text: "Isaac Newton", isCorrect: true },
-                { text: "Stephen Hawking", isCorrect: false },
-                { text: "Marie Curie", isCorrect: false },
+                { text: "Nitrogen", isCorrect: true },
+                { text: "Oxygen", isCorrect: false },
+                { text: "Carbon Dioxide", isCorrect: false },
+                { text: "Argon", isCorrect: false },
               ],
             },
           },
@@ -56,19 +79,50 @@ async function main() {
     },
   });
 
-
-  const questions = await prisma.question.findMany({
-    where: {
-      quizId: quizzes.id,
-    },
-    include: {
-      answers: true,
+  const quiz3 = await prisma.quiz.create({
+    data: {
+      title: "Geography Quiz",
+      description: "Test your knowledge of world geography",
+      difficulty: "EASY",
+      duration: 30,
+      user: {
+        connect: { id: user1.id },
+      },
+      questions: {
+        create: [
+          {
+            text: "Which is the largest continent?",
+            answers: {
+              create: [
+                { text: "Asia", isCorrect: true },
+                { text: "Africa", isCorrect: false },
+                { text: "Europe", isCorrect: false },
+                { text: "North America", isCorrect: false },
+              ],
+            },
+          },
+          {
+            text: "Which is the longest river in the world?",
+            answers: {
+              create: [
+                { text: "Nile River", isCorrect: true },
+                { text: "Amazon River", isCorrect: false },
+                { text: "Yangtze River", isCorrect: false },
+                { text: "Mississippi River", isCorrect: false },
+              ],
+            },
+          },
+        ],
+      },
     },
   });
 
-  console.log({ quizzes });
+  console.log({  quiz2, quiz3, user1, user2, user3 });
 }
 
 main()
   .then(() => prisma.$disconnect())
-  .catch(async (err) => console.log(err));
+  .catch(async (err) => {
+    console.error(err);
+    await prisma.$disconnect();
+  });

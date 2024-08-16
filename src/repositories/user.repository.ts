@@ -15,13 +15,14 @@ export async function createUserRegister(data: {
   email: string;
   username: string;
   password: string;
+  role: string; 
 }) {
   return await prisma.user.create({
     data: {
       email: data.email,
       username: data.username,
       password: data.password,
-      role: "USER",
+      role: data.role as Role,
     },
   });
 }
@@ -125,3 +126,12 @@ export async function deleteUser({ id }: { id: string }) {
     },
   });
 }
+
+export const checkUserExist = async (userId?: string) => {
+  console.log(`Checking user with ID: ${userId}`);
+  return await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+};

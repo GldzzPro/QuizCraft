@@ -14,9 +14,9 @@ model User {
   username  String   @db.VarChar(50)
   password  String
   role      Role     @default(USER)
-  score     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  score     Int      @default(0)
   quizzes   Quiz[]
 }
 
@@ -26,7 +26,7 @@ model Quiz {
   duration    Int
   description String?     @db.VarChar(255)
   userId      String
-  user        User       @relation(fields: [userId], references: [id])
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   questions   Question[] // Relation to Question
   difficulty  Difficulty @default(MEDIUM)
   createdAt   DateTime   @default(now())
@@ -35,22 +35,22 @@ model Quiz {
 
 model Question {
   id        String   @id @default(cuid())
-  text      String   @db.Text
+  text      String
   quizId    String
-  quiz      Quiz     @relation(fields: [quizId], references: [id])
-  answers   Answer[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  answers   Answer[] @relation("QuestionAnswers")
+  quiz      Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
 }
 
 model Answer {
   id         String   @id @default(cuid())
   isCorrect  Boolean  @default(false)
-  text       String   @db.Text
+  text       String
   questionId String
-  question   Question @relation(fields: [questionId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  question   Question @relation("QuestionAnswers", fields: [questionId], references: [id], onDelete: Cascade)
 }
 
 enum Role {

@@ -3,9 +3,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { QuizSchema } from "@/schemas/QuizSchemas";
-import { postQuiz } from "@/repositories/quiz.repository";
+import { findQuizById, postQuiz } from "@/repositories/quiz.repository";
 import { Difficulty } from "@prisma/client";
-import { getSession } from "next-auth/react";
+import { getSession, signOut } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
@@ -13,7 +13,6 @@ export default function useCreateQuiz() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState({});
   const [currentStep, setCurrentStep] = useState(1);
-
   const form = useForm<z.infer<typeof QuizSchema>>({
     resolver: zodResolver(QuizSchema),
     defaultValues: {
@@ -21,17 +20,6 @@ export default function useCreateQuiz() {
       description: "",
       difficulty: "",
       duration: 1,
-      // questions: [
-      //   {
-      //     text: "",
-      //     answer: [
-      //       {
-      //         text: "",
-      //         isCorrect: false,
-      //       },
-      //     ],
-      //   },
-      // ],
     },
   });
   const router = useRouter();
@@ -47,6 +35,8 @@ export default function useCreateQuiz() {
           title: "Failed",
           description: "Something went wrong, please login again",
         });
+        signOut();
+        setIsLoading(false);
         return;
       }
 
@@ -56,15 +46,18 @@ export default function useCreateQuiz() {
           description,
           difficulty: difficulty as Difficulty,
           duration,
-          userId,
+          userId: userId,
         });
+      const quizId = await findQuizById(quiz.id);
+
         if (quiz) {
           toast({
             variant: "default",
             title: "Success",
             description: "Quiz created successfully",
           });
-          router.push("/dashboard/quizzes");
+          router.push(`/dashboard/quizzes/${quizId?.id}`);
+          router.refresh();
         }
 
         setIsLoading(false);

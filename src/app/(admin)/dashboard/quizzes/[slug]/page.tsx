@@ -1,4 +1,4 @@
-import QuizDetails from "@/components/admin/quizzes/QuizDetails";
+import QuizDetails from "@/components/admin/quizzes/question/QuizDetails";
 import { getQuestionsById, getQuizById } from "@/repositories/quiz.repository";
 
 export default async function QuizzesDetailPages({
@@ -7,10 +7,16 @@ export default async function QuizzesDetailPages({
   params: { slug: string };
 }) {
   const questionsData = await getQuestionsById({ id: slug });
+  const processedQuestionsData = questionsData.map((question, index) => ({
+    id: question.id ?? `question-${index}`, // Use the provided id if available, otherwise generate a fallback
+    text: question.text,
+    answers: question.answers,
+  }));
+  
   return (
     <div>
       {questionsData.length > 0 ? (
-        <QuizDetails id={slug} data={questionsData} />
+        <QuizDetails id={slug} data={processedQuestionsData} />
       ) : (
         <div className="grid place-items-center ">
           <p className="text-muted-foreground text-lg md:text font-semibold">

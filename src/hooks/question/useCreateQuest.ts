@@ -24,8 +24,6 @@ export default function useCreateQuest({ quizId }: { quizId: string }) {
   const onSubmit = form.handleSubmit(async (data) => {
     const { text, answers } = data;
     setIsLoading(true);
-
-    // Check for errors
     const hasCorrectAnswer = answers.some(
       (answer) => answer.isCorrect === true
     );

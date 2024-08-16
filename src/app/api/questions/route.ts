@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     const question = await prisma.question.create({
       data: {
         text,
-        quiz: { connect: { id: quizId } }, // Connect the question to a specific quiz
+        quiz: { connect: { id: quizId } }, 
       },
     });
 

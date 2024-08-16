@@ -46,9 +46,11 @@ export const getQuestionsById = async ({ id }: { id: string }) => {
       quizId: id,
     },
     select: {
+      id: true,
       text: true,
       answers: {
         select: {
+          id: true,
           text: true,
           isCorrect: true,
         },
@@ -131,11 +133,22 @@ export const createQuestionById = async ({
     },
   });
 };
+export const deleteSpecificQuestion = async (id: string) => {
+  try {
+    return await prisma.question.delete({
+      where: { id },
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Failed to delete question: ${error.message}`);
+    }
+  }
+};
 
-export const deleteSpecificQuestion = async ({ id }: { id: string }) => {
-  return await prisma.question.delete({
+export const findQuizById = async (id: string) => {
+  return await prisma.quiz.findFirst({
     where: {
-      id,
+      id
     },
   });
 };

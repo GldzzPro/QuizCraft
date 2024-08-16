@@ -1,4 +1,3 @@
-import prisma from "@/lib/prisma";
 import UserUpdateForm from "@/components/admin/user/create-update-form/UpdateForm";
 import { getUserById } from "@/repositories/user.repository";
 

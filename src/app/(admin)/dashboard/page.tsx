@@ -28,13 +28,13 @@ export default async function DasboardPages() {
             {users.length > 0 ? (
               <TableDashboard />
             ) : (
-              <div className="grid place-items-center mt-14">
+              <div className="mt-14 grid place-items-center">
                 <h1 className="text-muted-foreground text-lg">No users</h1>
               </div>
             )}
           </div>
 
-          <div className="flex flex-col 2xl:flex-grow-0 flex-grow gap-2 h-[600px] col-span-2 overflow-y-auto no-scrollbar">
+          <div className={`flex flex-col $ flex-grow gap-2 h-[600px] col-span-2 overflow-y-auto no-scrollbar`}>
             {quizzes.map((quiz) => (
               <CardQuizHomePages
                 key={quiz.id}

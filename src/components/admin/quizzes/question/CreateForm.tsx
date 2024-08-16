@@ -87,6 +87,7 @@ export function QuestionAndAnswerForm({ quizId }: { quizId: string }) {
                                   placeholder={`Option ${index + 1}`}
                                   className="bg-muted/20 text-muted-foreground"
                                   {...form.register(`answers.${index}.text`)}
+                                  required
                                 />
                               </FormControl>
                               <FormMessage>
@@ -118,7 +119,7 @@ export function QuestionAndAnswerForm({ quizId }: { quizId: string }) {
                 ? "Loading..."
                 : "Add Question"}
             </Button>
-            <Link href={"/dashboard/quizzes"}>
+            <Link href={`/dashboard/quizzes/${quizId}`}>
               <Button type="button" variant="outline" disabled={isLoading}>
                 Back
               </Button>

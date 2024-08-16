@@ -7,7 +7,7 @@ export default function useDeleteQuiz({ id }: { id: string }) {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const router = useRouter();
-  const handleDelete = async (id: string) => {
+  const handleDelete = async () => {
     try {
       const result = await deleteQuizById({ id });
       if (result) {

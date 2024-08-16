@@ -34,7 +34,7 @@ export default async function Quiz({
             <h4 className="text-muted-foreground">Duration: {minutes}</h4>
           </div>
           <CreateButton
-            path={`/quizzes/questions/create/${slug}`}
+            path={`/quizzes/questions/${slug}`}
             text="Add Questions"
           />
         </header>

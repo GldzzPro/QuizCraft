@@ -5,20 +5,24 @@ import { useState } from "react";
 
 export default function useDeleteQuest({ id }: { id: string }) {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-
   const router = useRouter();
-  const handleDelete = async (id: string) => {
+
+  const handleDelete = async () => {
     try {
-      const result = await deleteSpecificQuestion({id})
+      const result = await deleteSpecificQuestion(id);
       if (result) {
         toast({
           title: "Success",
-          description: "Delete Question Successfully",
+          description: "Question deleted successfully.",
         });
         router.refresh();
       }
     } catch (error) {
-      console.error("Error deleting user:", error);
+      console.error("Error deleting question:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete the question.",
+      });
     }
   };
 

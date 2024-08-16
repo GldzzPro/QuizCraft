@@ -8,8 +8,6 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-
-import { TrashIcon } from "lucide-react";
 import useDeleteQuest from "@/hooks/question/useDeleteQuest";
 import PopOver from "../../core/AlertDialog";
 import { AnswerItem } from "./AnswersItem";
@@ -68,14 +66,8 @@ function QuestionCard({ question }: QuestionCardProps) {
       <Card>
         <CardHeader>
           <div className="flex justify-between items-center">
-            <CardTitle className="text-lg">{question.text}</CardTitle>
-            <Button
-              onClick={handleDeleteClick}
-              size="icon"
-              variant="ghost"
-            >
-              <TrashIcon className="w-5 h-5" />
-            </Button>
+            <CardTitle className="text-sm sm:text-lg ">{question.text}</CardTitle>
+           
           </div>
         </CardHeader>
         <CardContent>
@@ -83,9 +75,6 @@ function QuestionCard({ question }: QuestionCardProps) {
             {question.answers.map((answer) => (
               <AnswerItem key={answer.id} answer={answer} />
             ))}
-            <Button size="sm" variant="outline">
-              Add Answer
-            </Button>
           </div>
         </CardContent>
         <CardFooter className="flex justify-between">
@@ -93,7 +82,7 @@ function QuestionCard({ question }: QuestionCardProps) {
             <Button size="sm" variant="outline">
               Edit
             </Button>
-            <Button size="sm" variant="ghost">
+            <Button size="sm" variant="ghost"  onClick={handleDeleteClick}>
               Delete
             </Button>
           </div>

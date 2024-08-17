@@ -37,9 +37,11 @@ export default async function DasboardPages() {
             )}
           </div>
 
+          
           <Charts totalUsers={totalUsers} />
+          
 
-          <div className={`flex flex-col $ flex-grow gap-2 h-[600px] col-span-2 overflow-y-auto no-scrollbar`}>
+          <div className={`flex flex-col  flex-grow gap-2 h-[600px] col-span-2 overflow-y-auto no-scrollbar`}>
             {quizzes.map((quiz) => (
               <CardQuizHomePages
                 key={quiz.id}

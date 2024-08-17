@@ -41,7 +41,7 @@ export default function Charts({ totalUsers }: any) {
   ];
 
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col flex-grow">
       <CardHeader className="items-center pb-0">
         <CardTitle>Total User</CardTitle>
         <CardDescription>August - Present 2024</CardDescription>

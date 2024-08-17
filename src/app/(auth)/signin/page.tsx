@@ -1,7 +1,9 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import SigninForm from "@/components/admin/fragments/auth/SigninForm";
+import { Button } from "@/components/ui/button";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Signin() {
@@ -11,8 +13,8 @@ export default async function Signin() {
     redirect("/dashboard");
   }
 
-  if(session?.user?.role === "USER") {
-    redirect("/")
+  if (session?.user?.role === "USER") {
+    redirect("/");
   }
 
   return (
@@ -23,22 +25,29 @@ export default async function Signin() {
           width={1920}
           height={1080}
           alt="Login Illustration"
-          className=" w-full h-full object-cover"
-          style={{ aspectRatio: "1920/1080", objectFit: "cover" }}
+          className=" w-full h-full object-cover aspect-[1920/1080]"
           priority
         />
       </div>
-      <div className="flex items-center justify-center h-screen py-12 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-md space-y-8">
-          <div>
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-foreground">
-              Sign in to your account
-            </h2>
-            <p className="mt-2 text-center text-sm text-muted-foreground">
-              Enter your email and password to sign in to your account.
-            </p>
+
+      <div className="flex flex-col justify-between min-h-screen">
+        <div>
+          <Link href={"/"}>
+            <Button variant={"link"}>{"<"}Back to page</Button>
+          </Link>
+        </div>
+        <div className="flex items-center  justify-center h-screen py-12 px-4 sm:px-6 lg:px-8">
+          <div className="w-full max-w-md space-y-8">
+            <div>
+              <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-foreground">
+                Sign in to your account
+              </h2>
+              <p className="mt-2 text-center text-sm text-muted-foreground">
+                Enter your email and password to sign in to your account.
+              </p>
+            </div>
+            <SigninForm />
           </div>
-          <SigninForm />
         </div>
       </div>
     </div>

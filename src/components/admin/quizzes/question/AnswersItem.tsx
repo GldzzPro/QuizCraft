@@ -12,12 +12,12 @@ type AnswerItemProps = {
 export function AnswerItem({ answer }: AnswerItemProps) {
   return (
     <div
-      className={`flex items-center gap-2 justify-between rounded-md p-2 bg-muted ${
-        answer.isCorrect === true && "bg-green-300/70 text-primary"
+      className={`flex items-center gap-2 justify-between rounded-md p-2  ${
+        answer.isCorrect === true ? "bg-green-300/70 text-primary" : "bg-muted"
       }`}
     >
       <RadioGroup defaultValue={`${answer.isCorrect}`}>
-        <Label className="flex items-center gap-2 cursor-pointer">
+        <Label className={`flex items-center gap-2 cursor-pointer`}>
           <RadioGroupItem
             value={`${answer.isCorrect}`}
             checked={answer.isCorrect === true}

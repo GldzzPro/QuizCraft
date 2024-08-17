@@ -33,14 +33,13 @@ export default async function Signup() {
       </div>
       <div className="relative hidden lg:block">
         <Image
-          src="/assets/images/signin.jpg"
+          src="/assets/images/signup.jpg"
           width={1920}
           height={1080}
           alt="Login Illustration"
           className="h-full w-full object-cover"
           style={{ aspectRatio: "1920/1080", objectFit: "cover" }}
           priority
-          
         />
       </div>
     </div>

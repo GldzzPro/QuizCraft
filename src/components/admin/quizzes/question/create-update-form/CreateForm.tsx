@@ -22,6 +22,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useCreateQuest from "@/hooks/question/useCreateQuest";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function QuestionAndAnswerForm({ quizId }: { quizId: string }) {
   const { form, onSubmit, isLoading } = useCreateQuest({ quizId });
@@ -94,7 +95,7 @@ export function QuestionAndAnswerForm({ quizId }: { quizId: string }) {
                           </FormItem>
                         ))}
                         <FormMessage>
-                          {form.formState.errors.answers?.message }
+                          {form.formState.errors.answers?.message}
                         </FormMessage>
                       </RadioGroup>
                     </>
@@ -114,14 +115,11 @@ export function QuestionAndAnswerForm({ quizId }: { quizId: string }) {
                 : "Add Question"}
             </Button>
 
-            <Button
-              onClick={() => (form.reset(), router.back())}
-              type="button"
-              variant="outline"
-              disabled={isLoading}
-            >
-              Back
-            </Button>
+            <Link href={`/dashboard/quizzes/${quizId}`}>
+              <Button type="button" variant="outline" disabled={isLoading}>
+                Back
+              </Button>
+            </Link>
           </CardFooter>
         </Card>
       </form>

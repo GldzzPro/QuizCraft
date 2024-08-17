@@ -26,16 +26,6 @@ type QuestionProps = {
   }[];
 };
 
-export default function QuizDetails({ id, data }: QuestionProps) {
-  return (
-    <div className="space-y-6">
-      {data.map((question) => (
-        <QuestionCard key={question.id} question={question} />
-      ))}
-    </div>
-  );
-}
-
 type QuestionCardProps = {
   question: {
     id: string;
@@ -47,6 +37,17 @@ type QuestionCardProps = {
     }[];
   };
 };
+
+export default function QuizDetails({ id, data }: QuestionProps) {
+  return (
+    <div className="space-y-6">
+      {data.map((question) => (
+        <QuestionCard key={question.id} question={question} />
+      ))}
+    </div>
+  );
+}
+
 
 function QuestionCard({ question }: QuestionCardProps) {
   const {

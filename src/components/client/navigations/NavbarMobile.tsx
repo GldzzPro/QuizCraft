@@ -19,7 +19,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const NavbarMobile = () => {
+const NavbarMobileUser = () => {
   const pathname = usePathname();
 
   return (
@@ -30,7 +30,7 @@ const NavbarMobile = () => {
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="sm:max-w-xs">
+      <SheetContent side="right" className="sm:max-w-xs">
         <nav className="grid gap-6 text-lg font-medium">
           <SheetTrigger asChild>
             <Link
@@ -110,4 +110,4 @@ const NavbarMobile = () => {
   );
 };
 
-export default NavbarMobile;
+export default NavbarMobileUser;

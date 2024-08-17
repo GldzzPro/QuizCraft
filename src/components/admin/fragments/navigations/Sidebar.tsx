@@ -13,6 +13,7 @@ import {
   SettingsIcon,
   SquareTerminalIcon,
   UsersIcon,
+  PuzzleIcon
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -27,7 +28,7 @@ const Sidebar = () => {
             className={`group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full  text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base `}
             prefetch={false}
           >
-            <SquareTerminalIcon
+            <PuzzleIcon
               className={`h-5 w-5 transition-all text-primary `}
             />
             <span className="sr-only">Acme Inc</span>

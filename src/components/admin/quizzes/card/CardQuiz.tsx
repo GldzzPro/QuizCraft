@@ -45,7 +45,7 @@ const CardQuizHomePages = (quiz: {
               Difficulty
             </div>
             <div className="text-2xl font-bold">
-              {/* {capitalizeFirstLetter(quiz.difficulty)} */}
+              {capitalizeFirstLetter(quiz.difficulty)}
             </div>
           </div>
         </div>

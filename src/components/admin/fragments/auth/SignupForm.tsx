@@ -22,26 +22,6 @@ const SignupForm = () => {
         <div className="-space-y-px rounded-md relative shadow-sm">
           <FormField
             control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormMessage />
-                <FormControl>
-                  <Input
-                    id="email-address"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    className="relative block w-full appearance-none rounded-none rounded-t-md border border-input bg-background px-3 py-2 text-foreground placeholder-muted-foreground focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
-                    placeholder="Email address"
-                    {...field}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="username"
             render={({ field }) => (
               <FormItem>
@@ -52,7 +32,7 @@ const SignupForm = () => {
                     type="username"
                     autoComplete="username"
                     required
-                    className="relative block w-full appearance-none rounded-none border border-input bg-background px-3 py-2 text-foreground placeholder-muted-foreground focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
+                    className="relative block w-full appearance-none rounded-none rounded-t-md  border border-input bg-background px-3 py-2 text-foreground placeholder-muted-foreground focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
                     placeholder="Username"
                     {...field}
                   />
@@ -60,6 +40,27 @@ const SignupForm = () => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormMessage />
+                <FormControl>
+                  <Input
+                    id="email-address"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="relative block w-full appearance-none rounded-none border border-input bg-background px-3 py-2 text-foreground placeholder-muted-foreground focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
+                    placeholder="Email address"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="password"
@@ -81,7 +82,6 @@ const SignupForm = () => {
             )}
           />
           <FormField
-          
             control={form.control}
             name="confirmPassword"
             render={({ field }) => (
@@ -97,7 +97,7 @@ const SignupForm = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage  />
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -123,7 +123,6 @@ const SignupForm = () => {
           Signin
         </Link>
       </div>
-    
     </Form>
   );
 };

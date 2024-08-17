@@ -1,31 +1,19 @@
-"use client";
+"use client"
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuItem,
+
 } from "@/components/ui/dropdown-menu";
 import { LoaderCircleIcon } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
-import { toast } from "./ui/use-toast";
-import Link from "next/link";
+import {  useSession } from "next-auth/react";
+
+import OptionProfile from "./OptionProfile";
 
 const Profile: React.FC = () => {
   const { data: session, status } = useSession();
-  const handleLogout = () => {
-    signOut({
-      redirect: true,
-    }).then(() => {
-      toast({
-        title: "Logged out",
-        description: "You have been logged out",
-      });
-    });
-  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -38,7 +26,9 @@ const Profile: React.FC = () => {
                 session?.user?.name
               )}{" "}
             </h1>
-            <p className="text-xs">{session?.user?.email}</p>
+            <p className="text-xs truncate">
+              {session?.user?.email?.slice(0, 14).concat("...")}
+            </p>
           </span>
 
           <Avatar className="cursor-pointer">
@@ -50,20 +40,7 @@ const Profile: React.FC = () => {
           </Avatar>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <Link href={"/dashboard/profile"}>
-          <DropdownMenuItem className="cursor-pointer">
-            Settings
-          </DropdownMenuItem>
-        </Link>
-        <DropdownMenuItem className="cursor-pointer">Support</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
-          Logout
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+      <OptionProfile />
     </DropdownMenu>
   );
 };

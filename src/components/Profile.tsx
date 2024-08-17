@@ -12,6 +12,7 @@ import {
 import { LoaderCircleIcon } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { toast } from "./ui/use-toast";
+import Link from "next/link";
 
 const Profile: React.FC = () => {
   const { data: session, status } = useSession();
@@ -52,7 +53,11 @@ const Profile: React.FC = () => {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem>
+        <Link href={"/dashboard/profile"}>
+          <DropdownMenuItem className="cursor-pointer">
+            Settings
+          </DropdownMenuItem>
+        </Link>
         <DropdownMenuItem className="cursor-pointer">Support</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">

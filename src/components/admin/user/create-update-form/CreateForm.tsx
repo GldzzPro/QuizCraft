@@ -175,7 +175,7 @@ export default function CreateUserForm() {
             </div>
           </Card>
         </div>
-        <Button type="submit" className="w-full my-4">
+        <Button type="submit" className="w-full sm:w-auto my-4">
           {isLoading ? (
             <>
               <LoaderCircleIcon className="animate-spin " />

@@ -21,7 +21,7 @@ const Breadcrumbs = () => {
     <Breadcrumb className="hidden md:flex">
       <BreadcrumbList>
         {filteredPathnames.map((link: string, index: number) => {
-          const href: string = `/dashboard/${filteredPathnames
+          const href: string = `/${filteredPathnames
             .slice(0, index + 1)
             .join("/")}`;
           const linkName: string =

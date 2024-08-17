@@ -24,8 +24,8 @@ const TableDashboardUser = ({ users }: { users: any[] }) => {
           <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Quiz Scores</TableHead>
-          <TableHead>Created At</TableHead>
-          <TableHead>Updated At</TableHead>
+          <TableHead>Created at</TableHead>
+          <TableHead>Updated at</TableHead>
           <TableHead>
             <span className="sr-only">Actions</span>
           </TableHead>

@@ -51,7 +51,7 @@ const CardQuizHomePages = (quiz: {
         </div>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <Link href={`/dashboard/quizzes`}>
+        <Link href={`/dashboard/quizzes/${quiz.id}`}>
           <Button variant={"default"}>View Quiz</Button>
         </Link>
       </CardFooter>

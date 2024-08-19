@@ -10,12 +10,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import useLoginForm from "@/hooks/auth/useLoginForm";
 import { LoaderCircleIcon } from "lucide-react";
 import { useRegisterForm } from "@/hooks/auth/useRegisterForm";
+import { Separator } from "@/components/ui/separator";
+import GoogleButton from "../../core/GoogleButton";
 
 const SignupForm = () => {
   const { form, isLoading, onSubmit } = useRegisterForm();
+
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} className="space-y-8">
@@ -102,16 +104,25 @@ const SignupForm = () => {
             )}
           />
         </div>
-        <Button type="submit" className={`w-full `} disabled={isLoading}>
-          {isLoading ? (
-            <>
-              <LoaderCircleIcon className="animate-spin " />
-              <p className="ml-2">Loading...</p>
-            </>
-          ) : (
-            "Sign up"
-          )}
-        </Button>
+        <div className="space-y-3">
+          <Button type="submit" className={`w-full `} disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <LoaderCircleIcon className="animate-spin " />
+                <p className="ml-2">Loading...</p>
+              </>
+            ) : (
+              "Sign in"
+            )}
+          </Button>
+          {/* <div className="flex items-center justify-center gap-2">
+            <Separator className="flex-1" />
+            <span className="text-muted-foreground">OR</span>
+            <Separator className="flex-1" />
+          </div>
+
+    <GoogleButton/> */}
+        </div>
       </form>
       <div className="flex items-center justify-center">
         <p>Already have an account?</p>

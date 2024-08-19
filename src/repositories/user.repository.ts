@@ -15,7 +15,7 @@ export async function createUserRegister(data: {
   email: string;
   username: string;
   password: string;
-  role: string; 
+  role: string;
 }) {
   return await prisma.user.create({
     data: {
@@ -28,7 +28,7 @@ export async function createUserRegister(data: {
 }
 
 export async function getParticularDetailUser() {
-  return await prisma.user.findMany({
+  const userWithScores = await prisma.user.findMany({
     where: {
       role: "USER",
     },
@@ -36,24 +36,53 @@ export async function getParticularDetailUser() {
       id: true,
       username: true,
       email: true,
-      score: true,
+      scores: {
+        select: {
+          score: true,
+          quizId: true,
+        },
+      },
     },
   });
+
+  const calculatedScores = userWithScores.map((user) => {
+    const totalScore = user.scores.reduce((acc, score) => acc + score.score, 0);
+    return {
+      ...user,
+      totalScore,
+    };
+  });
+  return calculatedScores;
 }
+
 export async function getUserById(id: string) {
   const user = await prisma.user.findUnique({
     where: { id },
+    include: {
+      scores: {
+        select:{
+          score: true,
+          quiz: {
+            select: {
+              id: true,
+              title: true,
+            },
+            
+          },
+        }
+      },
+    },
   });
 
   if (!user) {
-    notFound(); 
+    notFound();
   }
 
   return user;
 }
 
 export async function getALlDetailUser() {
-  return await prisma.user.findMany({
+  const users = await prisma.user.findMany({
     where: {
       role: "USER",
     },
@@ -61,11 +90,23 @@ export async function getALlDetailUser() {
       id: true,
       username: true,
       email: true,
-      score: true,
+      scores: {
+        select: {
+          score: true,
+          quiz: {
+            select: {
+              id: true,
+              title: true,
+            },
+          },
+        },
+      },
       createdAt: true,
       updatedAt: true,
     },
   });
+
+  return users
 }
 
 // Function to create a user
@@ -92,20 +133,32 @@ export async function createUser({
     },
   });
 }
-
 export async function patchUser({
   id,
   email,
   username,
-  role, 
-  score, 
+  role,
+  scores, // Expecting an array of scores with quizId and score
 }: {
   id: string;
   email: string;
-  username: string; 
-  role: Role; 
-  score: number;
+  username: string;
+  role: Role;
+  scores: {
+    quizId: string;
+    score: number;
+  }[];
 }) {
+  // Fetch the existing scores for the user
+  const existingScores = await prisma.score.findMany({
+    where: {
+      userId: id,
+      quizId: {
+        in: scores.map((s) => s.quizId),
+      },
+    },
+  });
+
   return await prisma.user.update({
     where: {
       id,
@@ -114,7 +167,16 @@ export async function patchUser({
       email,
       username,
       role,
-      score,
+      scores: {
+        update: existingScores.map((existingScore) => ({
+          where: { id: existingScore.id }, // Use the score's unique ID
+          data: {
+            score:
+              scores.find((s) => s.quizId === existingScore.quizId)?.score ||
+              existingScore.score,
+          },
+        })),
+      },
     },
   });
 }

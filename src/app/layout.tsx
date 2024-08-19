@@ -1,10 +1,10 @@
 import "./globals.css";
-import { NextauthProviders } from "../lib/AuthProviders";
+import { NextAuthProviders } from "../lib/AuthProviders";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import { Metadata } from "next";
-import ClientLayout from "@/components/client/ClientLayout";
+import ClientLayout from "@/components/client/fragments/ClientLayout";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -32,9 +32,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontSans.variable
         )}
       >
-        <NextauthProviders>
+        <NextAuthProviders>
           <ClientLayout>{children}</ClientLayout>
-        </NextauthProviders>
+        </NextAuthProviders>
         <Toaster />
       </body>
     </html>

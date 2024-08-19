@@ -10,6 +10,9 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/signin", req.url));
   }
 
+  if(token.role === "USER") {
+    return NextResponse.redirect(new URL("/quiz", req.url));
+  }
 
   return NextResponse.next();
 }

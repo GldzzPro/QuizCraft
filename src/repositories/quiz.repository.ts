@@ -206,3 +206,15 @@ export const updateSpecificQuestionByQuizId = async ({
     },
   });
 };
+
+export const getScoreByUserId = async (userId: string) => {
+  return await prisma.score.findFirst({
+    where: {
+      userId
+    },
+    select: {
+      quizId: true,
+      score: true
+    }
+  })
+}

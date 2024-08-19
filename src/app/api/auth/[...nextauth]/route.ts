@@ -1,7 +1,12 @@
 import { compare } from "bcrypt";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { findUserEmail } from "../../../../repositories/user.repository";
+import GoogleProvider from "next-auth/providers/google";
+import prisma from "@/lib/prisma";
+import { findUserEmail } from "@/repositories/user.repository";
+
+const GOOGLE_ID = process.env.NEXT_GOOGLE_CLIENT_ID!;
+const GOOGLE_SECRET = process.env.NEXT_GOOGLE_CLIENT_SECRET!;
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -9,6 +14,10 @@ export const authOptions: NextAuthOptions = {
   },
   secret: "secret",
   providers: [
+    GoogleProvider({
+      clientId: GOOGLE_ID,
+      clientSecret: GOOGLE_SECRET,
+    }),
     CredentialsProvider({
       name: "signin",
       credentials: {
@@ -58,7 +67,31 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session: ({ session, token }) => {
+    async signIn({ account, profile }) {
+      if (account?.provider === "google") {
+        if (!profile?.email) {
+          throw new Error("Email not found");
+        }
+        await prisma.user.upsert({
+          where: {
+            email: profile.email,
+          },
+          create: {
+            email: profile.email,
+            username: profile.name || "",
+            role: "USER",
+            password: "", 
+          },
+          update: {
+            username: profile.name || "",
+          },
+        });
+
+        return true;
+      }
+      return true;
+    },
+    async session({ session, token }) {
       return {
         ...session,
         user: {
@@ -69,9 +102,9 @@ export const authOptions: NextAuthOptions = {
         },
       };
     },
-    jwt: ({ token, user }) => {
+    async jwt({ token, user }) {
       if (user) {
-        const u = user as unknown as any;
+        const u = user as any;
         return {
           ...token,
           id: user.id,

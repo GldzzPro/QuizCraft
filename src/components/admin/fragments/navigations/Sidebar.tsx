@@ -13,7 +13,8 @@ import {
   SettingsIcon,
   SquareTerminalIcon,
   UsersIcon,
-  PuzzleIcon
+  PuzzleIcon,
+  HelpCircleIcon
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -105,15 +106,15 @@ const Sidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
+                href="/dashboard/about"
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 prefetch={false}
               >
-                <SettingsIcon className="h-5 w-5" />
-                <span className="sr-only">Settings</span>
+                <HelpCircleIcon className="h-6 w-6" />
+                <span className="sr-only">About & Help</span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">Settings</TooltipContent>
+            <TooltipContent side="right">About & Help</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </nav>

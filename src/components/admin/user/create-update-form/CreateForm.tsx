@@ -165,6 +165,8 @@ export default function CreateUserForm() {
                         id="scores"
                         min="0"
                         placeholder="Enter scores"
+                        disabled
+                        className="bg-muted"
                         {...field}
                       />
                     </FormControl>

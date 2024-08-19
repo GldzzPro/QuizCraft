@@ -1,6 +1,6 @@
 import { toast } from "@/components/ui/use-toast";
 import {  findUserEmail } from "@/repositories/user.repository";
-import { UserUpdateSchema } from "@/schemas/UserSchemas";
+import { UserCreateSchema } from "@/schemas/UserSchemas";
 import { createUserByAdmin as postUser } from "@/services/userServices";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Role } from "@prisma/client";
@@ -12,8 +12,8 @@ import { z } from "zod";
 
 export default function useCreateUser() {
   const [isLoading, setIsLoading] = useState(false);
-  const form = useForm<z.infer<typeof UserUpdateSchema>>({
-    resolver: zodResolver(UserUpdateSchema),
+  const form = useForm<z.infer<typeof UserCreateSchema>>({
+    resolver: zodResolver(UserCreateSchema),
     defaultValues: {
       email: "",
       username: "",

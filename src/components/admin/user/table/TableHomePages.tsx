@@ -7,19 +7,19 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 import { getParticularDetailUser } from "@/repositories/user.repository";
 import { percentageNumber } from "@/helpers/formatData";
-import Link from "next/link";
 
 export default async function TableDashboard() {
   const users = await getParticularDetailUser();
 
   return (
     <div className="flex-grow">
-        <Table className="border ">
+      <Table className="border">
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead> 
+            <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Quiz Scores</TableHead>
             <TableHead>
@@ -28,13 +28,19 @@ export default async function TableDashboard() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map(({ email, score, username, id }) => (
+          {users.map(({ email, totalScore, username, id }) => (
             <TableRow key={id}>
               <TableCell className="font-medium">{username}</TableCell>
               <TableCell>{email}</TableCell>
               <TableCell>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline">{percentageNumber(score)}</Badge>
+                <div className="flex items-center gap-2 truncate">
+                  {!totalScore ? (
+                    <Badge variant="outline">No Score Available</Badge>
+                  ) : (
+                    <Badge variant={"outline"}>
+                      {percentageNumber(totalScore)}
+                    </Badge>
+                  )}
                 </div>
               </TableCell>
               <TableCell>
@@ -47,6 +53,5 @@ export default async function TableDashboard() {
         </TableBody>
       </Table>
     </div>
-    
- )
+  );
 }

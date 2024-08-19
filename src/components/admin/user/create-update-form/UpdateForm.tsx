@@ -1,4 +1,3 @@
-
 "use client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -24,26 +23,42 @@ import useUpdateUser from "@/hooks/user/useUpdateUser";
 import { LoaderCircleIcon } from "lucide-react";
 import Link from "next/link";
 import { formatDate } from "@/helpers/formatData";
+import { useToast } from "@/components/ui/use-toast";
 
-export default function UserUpdateForm({
-  user,
-}: {
-  user: {
-    id: string;
-    username: string | null;
-    email: string;
-    role: string;
+interface User {
+  id: string;
+  username: string | null;
+  email: string;
+  role: string;
+  scores: {
+    quiz: {
+      id: string;
+      title: string;
+    };
     score: number;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-}) {
+  }[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export default function UserUpdateForm({ user }: { user: User }) {
+  const { toast } = useToast();
   const { form, isLoading, onSubmit } = useUpdateUser({ user });
+
+  const handleClickWarn = () => {
+    toast({
+      variant: "destructive",
+      title: "Disabled",
+      description: "Cannot change the score!",
+      action: <Button variant={"ghost"}>OK</Button>,
+    });
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card className="p-4">
-          <h2 className="text-lg font-semibold">Edit Contact Information</h2>
+          <h2 className="text-lg font-semibold">Edit User Information</h2>
           <Separator className="my-4" />
           <div className="grid gap-6">
             <FormField
@@ -97,45 +112,54 @@ export default function UserUpdateForm({
                       Changing the role will affect the permissions of the user
                     </FormDescription>
                   </div>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    onValueChange={(value) => field.onChange(value)}
+                    value={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select Role" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem className="cursor-pointer" value="USER">
-                        User
-                      </SelectItem>
-                      <SelectItem className="cursor-pointer" value="ADMIN">
-                        Admin
-                      </SelectItem>
+                      <SelectItem value="USER">User</SelectItem>
+                      <SelectItem value="ADMIN">Admin</SelectItem>
                     </SelectContent>
                   </Select>
-
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="score"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Score</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="score"
-                      type="number"
-                      autoComplete="score"
-                      placeholder="Enter user score"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {form.getValues("scores") && form.getValues("scores").length > 0 && (
+              <FormField
+                control={form.control}
+                name="scores"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Scores</FormLabel>
+                    {field.value.map(({quizId, score, title }, index) => (
+                      <div key={index}>
+                        <FormControl>
+                          <Input
+                            id={`score-${index}`}
+                            type="number"
+                            className="bg-muted"
+                            autoComplete="score"
+                            value={score}
+                            onClick={handleClickWarn}
+                            disabled
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Quiz: {title}
+                        </FormDescription>
+                      </div>
+                    ))}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             <FormField
               control={form.control}
               name="createdAt"
@@ -150,6 +174,7 @@ export default function UserUpdateForm({
                       disabled
                       className="bg-muted"
                       placeholder="Cannot be changed"
+                      onClick={handleClickWarn}
                       value={formatDate(field.value.toString())}
                     />
                   </FormControl>
@@ -171,6 +196,7 @@ export default function UserUpdateForm({
                       className="bg-muted"
                       autoComplete="updatedAt"
                       placeholder="Cannot be changed"
+                      onClick={handleClickWarn}
                       value={formatDate(field.value.toString())}
                     />
                   </FormControl>
@@ -179,20 +205,19 @@ export default function UserUpdateForm({
               )}
             />
           </div>
-          <div className="flex justify-between mt-4 items-center flex-wrap gap-2">
-            <Button type="submit">
+          <div className="flex justify-end mt-6">
+            <Button type="submit" disabled={isLoading}>
               {isLoading ? (
-                <>
-                  <LoaderCircleIcon className="animate-spin " />
-                  <p className="ml-2">Loading...</p>
-                </>
+                <LoaderCircleIcon className="animate-spin" />
               ) : (
-                "Update"
+                "Save Changes"
               )}
             </Button>
-            <Button type="reset" variant="secondary">
-              <Link href={"/dashboard/users"}>Cancel</Link>
-            </Button>
+            <Link href={`/dashboard/users`}>
+              <Button variant="secondary" className="ml-2">
+                Cancel
+              </Button>
+            </Link>
           </div>
         </Card>
       </form>

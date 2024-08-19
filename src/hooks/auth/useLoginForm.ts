@@ -34,11 +34,9 @@ export default function useLoginForm() {
       const result = await signIn("credentials", {
         email,
         password,
-        callbackUrl: "/dashboard",
         redirect: false,
       });
 
-     
 
       if (result?.error) {
         console.log(result.error);
@@ -48,14 +46,14 @@ export default function useLoginForm() {
           description: "Login Failed, Please try again",
         });
         return;
-      } else {
-        router.push("/dashboard");
-        toast({
-          variant: "default",
-          title: "Success",
-          description: "Login Successful",
-        });
-      }
+      } 
+
+      router.push("/dashboard");
+      toast({
+        variant: "default",
+        title: "Success",
+        description: "Login Successful",
+      });
       setIsLoading(false);
     } catch (error) {
       if (error instanceof Error) {

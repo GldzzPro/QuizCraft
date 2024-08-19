@@ -1,10 +1,6 @@
 import { toast } from "@/components/ui/use-toast";
-import {
-  findUserEmail,
-  getUserById,
-  patchUser,
-} from "@/repositories/user.repository";
-import { UserCreateSchema } from "@/schemas/UserSchemas";
+import { patchUser } from "@/repositories/user.repository";
+import { UserUpdateSchema } from "@/schemas/UserSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Role } from "@prisma/client";
 import { useRouter } from "next/navigation";
@@ -12,17 +8,21 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-
-
 export default function useUpdateUser({
   user,
 }: {
   user: {
     id: string;
-    username: string | null; // Handle username as string or null
+    username: string | null;
     email: string;
     role: string;
-    score: number;
+    scores: {
+      quiz: {
+        id: string;
+        title: string;
+      };
+      score: number;
+    }[];
     createdAt: Date;
     updatedAt: Date;
   };
@@ -30,38 +30,40 @@ export default function useUpdateUser({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const form = useForm({
-    resolver: zodResolver(UserCreateSchema),
+    resolver: zodResolver(UserUpdateSchema),
     defaultValues: {
       email: user.email,
       username: user.username ?? "", // Use empty string if username is null
-      role: user.role as Role,
-      score: user.score ?? 0,
+      role: user.role as Role, // Ensure role is correctly cast to Role
+      scores: user.scores.map((score) => ({
+        quizId: score.quiz.id,
+        score: score.score,
+        title: score.quiz.title,
+        
+      })),
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof UserCreateSchema>) => {
-    const { email, username, role, score} = data;
+  const onSubmit = async (data: z.infer<typeof UserUpdateSchema>) => {
+    const { email, username, role, scores } = data;
     setIsLoading(true);
     try {
-      const result = await patchUser({
+      await patchUser({
         id: user.id,
         email,
-        username,
-        role: role as Role,
-        score: score ?? 0,
+        username: username ?? "", // Ensure username is a string
+        role: role as Role, // Ensure role is correctly cast to Role
+        scores: scores ?? [], // Ensure scores is an array
       });
-      if (result) {
-        toast({
-          title: "Success",
-          description: "Update Successful",
-          variant: "default",
-        });
-        router.push("/dashboard/users");
-        router.refresh();
-        setIsLoading(false);
-      }
+      toast({
+        title: "Success",
+        description: "Update Successful",
+        variant: "default",
+      });
+      router.push("/dashboard/users");
+      router.refresh();
     } catch (error) {
       if (error instanceof Error) {
         toast({
@@ -70,8 +72,11 @@ export default function useUpdateUser({
           description: error.message,
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return {
     form,
     onSubmit,

@@ -13,8 +13,13 @@ import { Input } from "@/components/ui/input";
 import useLoginForm from "@/hooks/auth/useLoginForm";
 import { LoaderCircleIcon } from "lucide-react";
 
+import { Separator } from "@/components/ui/separator";
+import GoogleIcon from "@/icons/GoogleIcon";
+import GoogleButton from "../../core/GoogleButton";
+
 const SigninForm = () => {
   const { form, onSubmit, isLoading } = useLoginForm();
+
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} className="space-y-8">
@@ -60,16 +65,25 @@ const SigninForm = () => {
             )}
           />
         </div>
-        <Button type="submit" className={`w-full `} disabled={isLoading}>
-          {isLoading ? (
-            <>
-              <LoaderCircleIcon className="animate-spin " />
-              <p className="ml-2">Loading...</p>
-            </>
-          ) : (
-            "Sign in"
-          )}
-        </Button>
+        <div className="space-y-3">
+          <Button type="submit" className={`w-full `} disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <LoaderCircleIcon className="animate-spin " />
+                <p className="ml-2">Loading...</p>
+              </>
+            ) : (
+              "Sign in"
+            )}
+          </Button>
+          {/* <div className="flex items-center justify-center gap-2">
+            <Separator className="flex-1" />
+            <span className="text-muted-foreground">OR</span>
+            <Separator className="flex-1" />
+          </div>
+
+          <GoogleButton /> */}
+        </div>
       </form>
       <div className="flex items-center justify-center">
         <p>Don{"'"}t have an account?</p>

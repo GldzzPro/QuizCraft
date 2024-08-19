@@ -14,7 +14,8 @@ import {
   SettingsIcon,
   MenuIcon,
   SquareTerminalIcon,
-  PuzzleIcon, // Updated to match Sidebar
+  PuzzleIcon,
+  HelpCircleIcon, // Updated to match Sidebar
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -93,7 +94,7 @@ const NavbarMobile = () => {
             </Link>
           </SheetTrigger>
           <Link
-            href="#"
+            href="/dashboard/about"
             className={`flex items-center gap-4 px-2.5 ${
               pathname === "#"
                 ? "text-primary-foreground"
@@ -101,8 +102,10 @@ const NavbarMobile = () => {
             } hover:text-foreground`}
             prefetch={false}
           >
-            <SettingsIcon className="h-5 w-5" />
-            Settings
+           <HelpCircleIcon className="h-6 w-6" />
+           <span className="sr-only">About & Help</span>
+
+           <p className="">About & Help</p>
           </Link>
         </nav>
       </SheetContent>

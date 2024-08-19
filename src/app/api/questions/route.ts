@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     const question = await prisma.question.create({
       data: {
         text,
-        quiz: { connect: { id: quizId } }, 
+        quiz: { connect: { id: quizId } },
       },
     });
 
@@ -62,3 +62,5 @@ export async function DELETE(request: Request) {
     );
   }
 }
+
+

@@ -40,6 +40,7 @@ export function useRegisterForm() {
   const router = useRouter();
   const onSubmit = form.handleSubmit(async (data) => {
     const { email, username, password, confirmPassword } = data;
+    
     setIsLoading(true);
     try {
       const result = await registerUser({
@@ -64,6 +65,7 @@ export function useRegisterForm() {
           description: "User already exists",
           variant: "destructive",
         });
+        return;
       }
       setIsLoading(false);
     } catch (error) {

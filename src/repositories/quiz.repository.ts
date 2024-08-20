@@ -218,3 +218,12 @@ export const getScoreByUserId = async (userId: string) => {
     }
   })
 }
+
+export const deleteScoresByUserId = async (userId: string, quizId: string) => {
+  return await prisma.score.deleteMany({
+    where: {
+      userId,
+      quizId,
+    },
+  });
+};

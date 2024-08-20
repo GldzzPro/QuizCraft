@@ -1,18 +1,18 @@
-"use client";
 import QuizCard from "@/components/client/fragments/QuizCard";
-import { useEffect, useState } from "react";
+import prisma from "@/lib/prisma";
 
-export default function QuizPage() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    (async function fetchData() {
-      const res = await fetch("/api/quiz");
-      const data = await res.json();
-      setData(data);
-    })();
-  }, []);
-
+export default async function QuizPage() {
+  const data = await prisma.quiz.findMany({
+    select: {
+      id: true,
+      title: true,
+      difficulty: true,
+      description: true,
+      duration: true,
+      createdAt: true,
+      questions: true,
+    },
+  });
   return data.length > 0 ? (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {data.map((quiz: any) => (

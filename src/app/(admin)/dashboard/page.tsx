@@ -1,10 +1,11 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 import { getAllQuizzes } from "@/repositories/quiz.repository";
 import TableDashboard from "@/components/admin/user/table/TableHomePages";
 import CardQuizHomePages from "@/components/admin/quizzes/card/CardQuiz";
 import { getALlDetailUser, getParticularDetailUser } from "@/repositories/user.repository";
 import Charts from "@/components/admin/fragments/charts";
+import { authOptions } from "@/lib/authOptions";
 export default async function DasboardPages() {
   const session = await getServerSession(authOptions);
   const name = session?.user?.name;

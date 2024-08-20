@@ -3,11 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const { userId, quizId, score } = await request.json();
-  console.log(userId, quizId, score);
-  
 
-  if (!userId || !quizId || !score) {
-    throw new Error("userId, quizId and score are required");
+  // Ensure the score is a number and not undefined
+  if (!userId || !quizId || typeof score !== "number") {
+    return NextResponse.json({ error: "userId, quizId, and score are required" }, { status: 400 });
   }
   try {
     const scoreData = await prisma.score.create({

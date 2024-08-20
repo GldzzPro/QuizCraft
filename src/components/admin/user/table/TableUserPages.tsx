@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 
 const TableDashboardUser = ({ users }: { users: any[] }) => {
   const { handleDelete } = useDeleteUser();
+
   return users.length > 0 ? (
     <Table className="border rounded-lg">
       <TableHeader>
@@ -26,8 +27,8 @@ const TableDashboardUser = ({ users }: { users: any[] }) => {
           <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Quiz Scores</TableHead>
-          <TableHead>Created at</TableHead>
-          <TableHead>Updated at</TableHead>
+          <TableHead className="hidden sm:table-cell">Created at</TableHead>
+          <TableHead className="hidden sm:table-cell">Updated at</TableHead>
           <TableHead>
             <span className="sr-only">Actions</span>
           </TableHead>
@@ -35,51 +36,47 @@ const TableDashboardUser = ({ users }: { users: any[] }) => {
       </TableHeader>
 
       <TableBody>
-        {users.map(({ email, scores, username, id, createdAt, updatedAt }) => (
-          <TableRow key={id}>
-            <TableCell className="font-medium">{username}</TableCell>
-            <TableCell>{email}</TableCell>
-            <TableCell>
-              <div className="flex items-center gap-4">
-                {scores.length > 0 ? (
-                  <>
-                    {scores.slice(0, 2).map(
-                      (
-                        s: { score: number; quiz: { title: string } }, // Correct typing for each score item
-                        index: number
-                      ) => (
-                        <div key={index} className="flex items-center flex-col">
+        {users.map(({ email, scores, username, id, createdAt, updatedAt }) => {
+          const lastScore = scores[scores.length - 1]; // Get the last score in the array
+
+          return (
+            <TableRow key={id}>
+              <TableCell className="font-medium">{username}</TableCell>
+              <TableCell>{email}</TableCell>
+              <TableCell>
+                <div className="flex items-center gap-4">
+                  {scores.length > 0 ? (
+                    <>
+                      {lastScore && (
+                        <div className="flex items-center flex-col">
                           <Badge variant="outline">
-                            {percentageNumber(s.score)}.%
+                            {percentageNumber(lastScore.score)}
                           </Badge>
-                          <p className="text-xs text-muted-foreground lowercase">
-                            {s.quiz.title}
+                          <p className="text-xs text-center text-muted-foreground lowercase">
+                            {lastScore.quiz.title}
                           </p>
                         </div>
-                      )
-                    )}
-                    {scores.length > 3 && (
-                      <Link href={`/dashboard/users/${id}`}>
-                        <Button variant={"link"}>
-                          <EllipsisIcon />
-                        </Button>
-                      </Link>
-                    )}
-                  </>
-                ) : (
-                  <span className="text-muted-foreground text-xs">
-                    No Scores Available
-                  </span>
-                )}
-              </div>
-            </TableCell>
-            <TableCell>{formatDate(createdAt)}</TableCell>
-            <TableCell>{formatDate(updatedAt)}</TableCell>
-            <TableCell>
-              <DropdownTable path={id} onDelete={() => handleDelete(id)} />
-            </TableCell>
-          </TableRow>
-        ))}
+                      )}
+                    </>
+                  ) : (
+                    <span className="text-muted-foreground text-xs">
+                      No Scores Available
+                    </span>
+                  )}
+                </div>
+              </TableCell>
+              <TableCell className="hidden sm:table-cell">
+                {formatDate(createdAt)}
+              </TableCell>
+              <TableCell className="hidden sm:table-cell">
+                {formatDate(updatedAt)}
+              </TableCell>
+              <TableCell>
+                <DropdownTable path={id} onDelete={() => handleDelete(id)} />
+              </TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   ) : (
@@ -88,5 +85,6 @@ const TableDashboardUser = ({ users }: { users: any[] }) => {
     </div>
   );
 };
+
 
 export default TableDashboardUser;

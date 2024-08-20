@@ -39,12 +39,12 @@ export default function useLoginForm() {
 
 
       if (result?.error) {
-        console.log(result.error);
         toast({
           variant: "destructive",
           title: "Failed",
           description: "Login Failed, Please try again",
         });
+        setIsLoading(false)
         return;
       } 
 

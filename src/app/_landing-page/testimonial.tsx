@@ -1,3 +1,4 @@
+import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 export default function Testimonial() {
   return (
@@ -38,7 +39,7 @@ export default function Testimonial() {
               - Sarah, Student
             </div>
           </div>
-          <div className="flex flex-col items-center sm:items-start justify-center space-y-4">
+          <div className="flex flex-col  items-center sm:items-end  justify-center space-y-4">
             <Image
               src="/assets/images/testimonial2.jpg"
               alt="alt"

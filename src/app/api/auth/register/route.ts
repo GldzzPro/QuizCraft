@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 
 import {
   createUserRegister,
   findUserEmail,
 } from "@/repositories/user.repository";
-export const hashPassword = async (password: string)=> {
+export const hashPassword = async (password: string) => {
   const salt = await bcrypt.genSalt();
-  return await bcrypt.hash(password, salt)
-}
+  return await bcrypt.hash(password, salt);
+};
 export async function POST(req: NextRequest) {
-  const { email, username, password, confirmPassword } = await req.json();
+  const { email, username, password, confirmPassword, role } = await req.json();
   const passwordMatch = password === confirmPassword;
   if (!passwordMatch) {
     return NextResponse.json(
@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
       email,
       username,
       password: await hashPassword(password),
+      role: role ?? "USER",
     });
 
     return NextResponse.json(

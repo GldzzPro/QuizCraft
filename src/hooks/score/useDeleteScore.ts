@@ -1,24 +1,28 @@
 import { toast } from "@/components/ui/use-toast";
-import { deleteQuizById } from "@/repositories/quiz.repository";
+import { deleteScoresByUserId } from "@/repositories/quiz.repository";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function useDeleteQuiz({ id }: { id: string }) {
+export default function useDeleteScore({ userId }: { userId: string }) {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-
   const router = useRouter();
-  const handleDelete = async (quizId:string) => {
+
+  const handleDelete = async (quizId?: string) => {
     try {
-      const result = await deleteQuizById({id: quizId});
+      const result = await deleteScoresByUserId(userId, quizId);
       if (result) {
         toast({
           title: "Success",
-          description: "Delete Quiz Successfully",
+          description: "Score deleted successfully.",
         });
         router.refresh();
       }
     } catch (error) {
-      console.error("Error deleting user:", error);
+      console.error("Error deleting Score:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete the Score.",
+      });
     }
   };
 

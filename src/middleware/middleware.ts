@@ -14,6 +14,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/quiz", req.url));
   }
 
+  if(token.role === "ADMIN") {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
+
   return NextResponse.next();
 }
 

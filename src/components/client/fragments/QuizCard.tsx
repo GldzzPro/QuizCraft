@@ -13,6 +13,8 @@ import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import useIsAuth from "../useIsAuth";
+import ButtonQuizPath from "../core/ButtonQuizPath";
 
 export default function QuizCard({
   id,
@@ -27,27 +29,7 @@ export default function QuizCard({
   difficulty: string;
   questions: any[];
 }) {
-  const router = useRouter();
-  const { data: session, status } = useSession();
-  const [isLoading, setIsLoading] = useState(false)
-  const handlePath = () => {
-    setIsLoading(true)
-    if (status === "unauthenticated" || !session) {
-      signIn();
-      toast({
-        title: "Please login to continue",
-        variant: "default",
-        action: <Button size={"sm"}>ok</Button>,
-      });
-      setIsLoading(false)
-    }
 
-    if (status === "authenticated") {
-      router.push(`/quiz/${id}`);
-      setIsLoading(false)
-    }
-    setIsLoading(false)
-  };
   return (
     <Card key={id}>
       <CardHeader>
@@ -78,10 +60,11 @@ export default function QuizCard({
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button onClick={handlePath} variant={"default"}>
-        {isLoading ? "Loading..." : "Start Quiz"}
-        </Button>
+      <CardFooter className="flex justify-between flex-row-reverse">
+       <ButtonQuizPath id={id} />
+        <Link href={`quiz/view/${id}`}>
+          <Button variant={"secondary"}>View Quiz</Button>
+        </Link>
       </CardFooter>
     </Card>
   );

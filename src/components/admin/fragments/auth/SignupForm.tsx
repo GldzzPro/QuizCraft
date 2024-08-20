@@ -121,7 +121,7 @@ const SignupForm = () => {
             <Separator className="flex-1" />
           </div>
 
-    <GoogleButton/> */}
+          <GoogleButton /> */}
         </div>
       </form>
       <div className="flex items-center justify-center">

@@ -1,6 +1,7 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 import SigninForm from "@/components/admin/fragments/auth/SigninForm";
 import { Button } from "@/components/ui/button";
+import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";

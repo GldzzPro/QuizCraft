@@ -22,7 +22,7 @@ export async function createUserRegister(data: {
       email: data.email,
       username: data.username,
       password: data.password,
-      role: data.role as Role,
+      role: data.role as Role || "USER",
     },
   });
 }
@@ -80,7 +80,6 @@ export async function getUserById(id: string) {
 
   return user;
 }
-
 export async function getALlDetailUser() {
   const users = await prisma.user.findMany({
     where: {
@@ -100,14 +99,19 @@ export async function getALlDetailUser() {
             },
           },
         },
+        orderBy: {
+          createdAt: 'desc', // Assuming you want the most recent scores
+        },
+        take: 1, // Only take the last score
       },
       createdAt: true,
       updatedAt: true,
     },
   });
 
-  return users
+  return users;
 }
+
 
 // Function to create a user
 export async function createUser({

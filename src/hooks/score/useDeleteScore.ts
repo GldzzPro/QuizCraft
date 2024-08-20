@@ -7,9 +7,9 @@ export default function useDeleteScore({ userId }: { userId: string }) {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const router = useRouter();
 
-  const handleDelete = async (quizId?: string) => {
+  const handleDelete = async (quizId: string) => {
     try {
-      const result = await deleteScoresByUserId(userId, quizId);
+      const result = await deleteScoresByUserId( quizId);
       if (result) {
         toast({
           title: "Success",

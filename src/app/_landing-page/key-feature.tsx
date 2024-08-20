@@ -21,7 +21,7 @@ export default function KeyFeatures() {
         <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
           <div className="flex flex-col order-last justify-center space-y-4">
             <ul className="grid gap-6">
-              <li>
+              <li data-aos="fade-left" data-aos-duration="1000">
                 <div className="grid gap-1">
                   <h3 className="text-xl font-bold">Personalized Quizzes</h3>
                   <p className="text-muted-foreground">
@@ -30,7 +30,7 @@ export default function KeyFeatures() {
                   </p>
                 </div>
               </li>
-              <li>
+              <li  data-aos="fade-left" data-aos-duration="900">
                 <div className="grid gap-1">
                   <h3 className="text-xl font-bold">Progress Tracking</h3>
                   <p className="text-muted-foreground">
@@ -39,7 +39,7 @@ export default function KeyFeatures() {
                   </p>
                 </div>
               </li>
-              <li>
+              <li  data-aos="fade-left" data-aos-duration="800">
                 <div className="grid gap-1">
                   <h3 className="text-xl font-bold">Leaderboards</h3>
                   <p className="text-muted-foreground">
@@ -53,6 +53,7 @@ export default function KeyFeatures() {
           <Image
             src="/assets/images/person.jpg"
             alt="alt"
+             data-aos="fade-right"
             width={550}
             height={550}
             className="mx-auto aspect-video order-first object-cover overflow-hidden rounded-xl  sm:w-full"

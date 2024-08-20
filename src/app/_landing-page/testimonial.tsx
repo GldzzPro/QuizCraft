@@ -25,17 +25,22 @@ export default function Testimonial() {
               width={150}
               height={150}
               className="rounded-xl"
+              data-aos="fade-right"
+              data-aos-duration="1000"
             />
-            <div className="text-xl font-bold">
+            <div className="text-xl font-bold" data-aos="fade-right" 
+              data-aos-duration="900">
               &quot;This app has been a game-changer for me!&quot;
             </div>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground" data-aos="fade-right" 
+              data-aos-duration="800">
               &quot;I&apos;ve been using the quiz app for a few months now, and
               it&apos;s helped me improve my knowledge in so many areas. The
               personalized quizzes are fantastic, and I love the progress
               tracking feature.&quot;
             </p>
-            <div className="text-sm font-medium text-primary ">
+            <div className="text-sm font-medium text-primary " data-aos="fade-right" 
+              data-aos-duration="700">
               - Sarah, Student
             </div>
           </div>
@@ -46,17 +51,23 @@ export default function Testimonial() {
               width={150}
               height={150}
               className="rounded-xl "
+              data-aos="fade-left"
+              
+              data-aos-duration="1000"
             />
-            <div className="text-xl font-bold">
+            <div className="text-xl font-bold" data-aos="fade-left" 
+              data-aos-duration="900">
               &quot;I can&apos;t imagine learning without this app!&quot;
             </div>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground" data-aos="fade-left" 
+              data-aos-duration="800">
               &quot;As a busy professional, I was struggling to find time to
               learn new skills. The quiz app has made it so much easier to fit
               learning into my schedule. The leaderboards are also a great way
               to stay motivated.&quot;
             </p>
-            <div className="text-sm font-medium text-primary">
+            <div className="text-sm font-medium text-primary"data-aos="fade-left" 
+              data-aos-duration="700">
               - Michael, Software Engineer
             </div>
           </div>

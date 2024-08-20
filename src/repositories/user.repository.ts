@@ -89,6 +89,7 @@ export async function getALlDetailUser() {
       id: true,
       username: true,
       email: true,
+      role: true,
       scores: {
         select: {
           score: true,
@@ -99,19 +100,13 @@ export async function getALlDetailUser() {
             },
           },
         },
-        orderBy: {
-          createdAt: 'desc', // Assuming you want the most recent scores
-        },
-        take: 1, // Only take the last score
       },
       createdAt: true,
       updatedAt: true,
     },
   });
-
-  return users;
+  return users
 }
-
 
 // Function to create a user
 export async function createUser({

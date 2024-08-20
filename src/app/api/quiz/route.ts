@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { getAllQuizzes } from "@/repositories/quiz.repository";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -27,17 +28,7 @@ export async function POST(req: Request) {
 
 export async function GET() {
   try {
-    const quiz = await prisma.quiz.findMany({
-      select: {
-        id: true,
-        title: true,
-        difficulty: true,
-        description: true,
-        duration: true,
-        createdAt: true,
-        questions: true,
-      },
-    });
+    const quiz = await getAllQuizzes();
     return NextResponse.json(quiz);
   } catch (error) {
     console.log(error);

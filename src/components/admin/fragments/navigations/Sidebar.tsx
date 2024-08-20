@@ -14,7 +14,7 @@ import {
   SquareTerminalIcon,
   UsersIcon,
   PuzzleIcon,
-  HelpCircleIcon
+  HelpCircleIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -29,9 +29,7 @@ const Sidebar = () => {
             className={`group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full  text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base `}
             prefetch={false}
           >
-            <PuzzleIcon
-              className={`h-5 w-5 transition-all text-primary `}
-            />
+            <PuzzleIcon className={`h-5 w-5 transition-all text-primary `} />
             <span className="sr-only">Acme Inc</span>
           </Link>
           <Tooltip>
@@ -98,7 +96,6 @@ const Sidebar = () => {
             </TooltipTrigger>
             <TooltipContent side="right">Quizzes</TooltipContent>
           </Tooltip>
-         
         </TooltipProvider>
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
@@ -107,7 +104,11 @@ const Sidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 href="/dashboard/about"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ${
+                  pathname === "/dashboard/about"
+                    ? "text-foreground"
+                    : "text-muted-foreground "
+                }`}
                 prefetch={false}
               >
                 <HelpCircleIcon className="h-6 w-6" />

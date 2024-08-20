@@ -16,6 +16,7 @@ export const getAllQuizzes = async () => {
   });
 };
 
+
 export const postQuiz = async ({
   title,
   description,
@@ -219,10 +220,10 @@ export const getScoreByUserId = async (userId: string) => {
   })
 }
 
-export const deleteScoresByUserId = async (userId: string, quizId: string) => {
+export const deleteScoresByUserId = async ( quizId: string) => {
   return await prisma.score.deleteMany({
     where: {
-      userId,
+      
       quizId,
     },
   });

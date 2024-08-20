@@ -16,8 +16,25 @@ import useDeleteUser from "@/hooks/user/useDeleteUser";
 import { EllipsisIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Role } from "@prisma/client";
 
-const TableDashboardUser = ({ users }: { users: any[] }) => {
+type UsersProps = {
+  id: string;
+  username: string ;
+  email: string;
+  role: Role;
+  scores: {
+    quiz: {
+      id: string;
+      title: string;
+    };
+    score: number;
+  }[];
+  createdAt: Date;
+  updatedAt: Date;
+}[];
+
+const TableDashboardUser = ({ users }: { users: UsersProps }) => {
   const { handleDelete } = useDeleteUser();
 
   return users.length > 0 ? (
@@ -36,47 +53,57 @@ const TableDashboardUser = ({ users }: { users: any[] }) => {
       </TableHeader>
 
       <TableBody>
-        {users.map(({ email, scores, username, id, createdAt, updatedAt }) => {
-          const lastScore = scores[scores.length - 1]; // Get the last score in the array
-
-          return (
-            <TableRow key={id}>
-              <TableCell className="font-medium">{username}</TableCell>
-              <TableCell>{email}</TableCell>
-              <TableCell>
-                <div className="flex items-center gap-4">
-                  {scores.length > 0 ? (
-                    <>
-                      {lastScore && (
-                        <div className="flex items-center flex-col">
-                          <Badge variant="outline">
-                            {percentageNumber(lastScore.score)}
-                          </Badge>
-                          <p className="text-xs text-center text-muted-foreground lowercase">
-                            {lastScore.quiz.title}
-                          </p>
-                        </div>
+        {users.map(({ email, scores, username, id, createdAt, updatedAt }) => (
+          <TableRow key={id}>
+            <TableCell className="font-medium">{username}</TableCell>
+            <TableCell>{email}</TableCell>
+            <TableCell>
+              <div className="flex items-center gap-4">
+                {scores.length > 0 ? (
+                  <>
+                    {scores
+                      .filter((s) => s.score > 0)
+                      .slice(0, 2)
+                      .map(
+                        (
+                          s: { score: number; quiz: { title: string } }, // Correct typing for each score item
+                          index: number
+                        ) => (
+                          <div
+                            key={index}
+                            className="flex items-center flex-col"
+                          >
+                            <Badge variant="outline">
+                              {percentageNumber(s.score)}.%
+                            </Badge>
+                            <p className="text-xs text-muted-foreground lowercase">
+                              {s.quiz.title}
+                            </p>
+                          </div>
+                        )
                       )}
-                    </>
-                  ) : (
-                    <span className="text-muted-foreground text-xs">
-                      No Scores Available
-                    </span>
-                  )}
-                </div>
-              </TableCell>
-              <TableCell className="hidden sm:table-cell">
-                {formatDate(createdAt)}
-              </TableCell>
-              <TableCell className="hidden sm:table-cell">
-                {formatDate(updatedAt)}
-              </TableCell>
-              <TableCell>
-                <DropdownTable path={id} onDelete={() => handleDelete(id)} />
-              </TableCell>
-            </TableRow>
-          );
-        })}
+                    {scores.length > 3 && (
+                      <Link href={`/dashboard/users/${id}`}>
+                        <Button variant={"link"}>
+                          <EllipsisIcon />
+                        </Button>
+                      </Link>
+                    )}
+                  </>
+                ) : (
+                  <span className="text-muted-foreground text-xs">
+                    No Scores Available
+                  </span>
+                )}
+              </div>
+            </TableCell>
+            <TableCell>{formatDate(createdAt)}</TableCell>
+            <TableCell>{formatDate(updatedAt)}</TableCell>
+            <TableCell>
+              <DropdownTable path={id} onDelete={() => handleDelete(id)} />
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   ) : (
@@ -85,6 +112,5 @@ const TableDashboardUser = ({ users }: { users: any[] }) => {
     </div>
   );
 };
-
 
 export default TableDashboardUser;

@@ -5,17 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 const QuizPlayWrap = ({ children }: { children: React.ReactNode }) => {
-    const { currentQuestion, questions, score, time, countDown } = usePlayQuiz();
-  
-    if (countDown) {
-      return (
-        <div className="flex flex-col items-center justify-center h-full">
-          <h1 className="text-5xl text-primary font-bold">Quiziums!</h1>
-          <p className="mt-4 text-lg text-muted-foreground">Loading...</p>
-        </div>
-      );
-    }
-  
+    const { currentQuestion, questions, score, time, } = usePlayQuiz();
     if (currentQuestion < questions.length && time > 0) {
       return <>{children}</>;
     }

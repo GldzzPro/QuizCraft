@@ -1,18 +1,8 @@
 import QuizCard from "@/components/client/fragments/QuizCard";
-import prisma from "@/lib/prisma";
+import { getAllQuizzes } from "@/repositories/quiz.repository";
 
 export default async function QuizPage() {
-  const data = await prisma.quiz.findMany({
-    select: {
-      id: true,
-      title: true,
-      difficulty: true,
-      description: true,
-      duration: true,
-      createdAt: true,
-      questions: true,
-    },
-  });
+  const data = await getAllQuizzes();
   return data.length > 0 ? (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {data.map((quiz: any) => (

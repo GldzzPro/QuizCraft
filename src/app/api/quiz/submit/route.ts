@@ -13,7 +13,7 @@ export async function POST(request: Request) {
       data: {
         userId,
         quizId,
-        score,
+        score
       },
     });
 

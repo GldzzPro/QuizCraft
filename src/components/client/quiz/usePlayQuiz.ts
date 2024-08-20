@@ -25,39 +25,47 @@ export default function usePlayQuiz() {
   const [time, setTime] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [countDown, setCountDown] = useState(false);
-
+  const [countDownTime, setCountDownTime] = useState(5);
   useEffect(() => {
     if (quizId) {
       (async () => {
-        setCountDown(true);
+        // setCountDown(true);
         try {
           const res = await fetch(`/api/quiz/${quizId}`);
           if (!res.ok) {
             throw new Error("Failed to fetch data");
           }
           const storeData = await res.json();
-          setCountDown(false);
+          // setCountDown(false);
           setQuestions(storeData.questions);
           setTime(storeData.duration);
         } catch (error) {
           console.log(error);
-        } finally {
-          setCountDown(false);
-        }
+        } 
+        // finally {
+        //   setCountDown(false);
+        // }
       })();
     }
   }, [quizId]);
 
-  // Timer and end quiz handling
+  useEffect(() => {
+    if (countDownTime > 0) {
+      const countdownTimer = setInterval(() => {
+        setCountDownTime((prevTime) => prevTime - 1);
+      }, 1000);
+      return () => clearInterval(countdownTimer);
+    }
+  }, [countDownTime]);
+
   useEffect(() => {
     if (time > 0 && currentQuestion < questions.length) {
       const timer = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
       }, 1000);
-      // Clean up the timer on component unmount or when the timer ends
       return () => clearInterval(timer);
     } else if (time === 0 || currentQuestion >= questions.length) {
-      submitScore(); // Submit the score when time runs out or all questions are answered
+      submitScore();
     }
   }, [time, currentQuestion]);
 
@@ -71,7 +79,7 @@ export default function usePlayQuiz() {
         body: JSON.stringify({
           userId,
           quizId,
-          score,
+          score, // Final score is sent to the backend
         }),
       });
       if (!res.ok) {
@@ -88,7 +96,7 @@ export default function usePlayQuiz() {
 
   const handleSubmit = () => {
     if (selectAnswer && selectAnswer.isCorrect) {
-      setScore(score + 1);
+      setScore(score + 1); // Increment score by 1 for each correct answer
     }
     setCurrentQuestion(currentQuestion + 1);
     setSelectAnswer(null);
@@ -106,5 +114,6 @@ export default function usePlayQuiz() {
     time,
     score,
     countDown,
+    countDownTime
   };
 }

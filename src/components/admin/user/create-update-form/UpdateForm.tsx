@@ -154,24 +154,28 @@ export default function UserUpdateForm({ user }: { user: User }) {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Scores</FormLabel>
-                      {user.scores.map((scoreData, index) => (
-                        <div key={index}>
-                          <FormControl>
-                            <Input
-                              id={`score-${index}`}
-                              type="number"
-                              className="bg-muted"
-                              autoComplete="score"
-                              value={scoreData.score}
-                              onClick={handleClickWarn}
-                              disabled
-                            />
-                          </FormControl>
-                          <FormDescription className="my-2 ml-2">
-                            Quiz: {scoreData.quiz.title}
-                          </FormDescription>
-                        </div>
-                      ))}
+                      {user.scores
+                        .filter((score) => score.score > 0)
+                        .map((scoreData, index) => {
+                          return (
+                            <div key={index}>
+                              <FormControl>
+                                <Input
+                                  id={`score-${index}`}
+                                  type="number"
+                                  className="bg-muted"
+                                  autoComplete="score"
+                                  value={scoreData.score}
+                                  onClick={handleClickWarn}
+                                  disabled
+                                />
+                              </FormControl>
+                              <FormDescription className="my-2 ml-2">
+                                Quiz: {scoreData.quiz.title}
+                              </FormDescription>
+                            </div>
+                          );
+                        })}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -229,7 +233,7 @@ export default function UserUpdateForm({ user }: { user: User }) {
                   onClick={handleDeleteClick}
                   variant={"destructive"}
                 >
-                  Delete All Scores
+                  Delete Scores
                 </Button>
               )}
               <Button type="submit" disabled={isLoading}>

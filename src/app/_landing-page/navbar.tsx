@@ -1,14 +1,10 @@
-"use client";
+import ProfileIsAuth from "@/components/client/core/ProfileIsAuth";
 import NavbarMobileUser from "@/components/client/navigations/NavbarMobile";
-import Profile from "@/components/Profile";
-import { Button } from "@/components/ui/button";
 import { PuzzleIcon } from "lucide-react";
-import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
 export default function Navbar() {
-  const { status } = useSession();
   return (
     <header className="px-4 lg:px-6 h-14 flex justify-between  items-center">
       <a href="/" className="flex items-center justify-center">
@@ -31,7 +27,7 @@ export default function Navbar() {
           Features
         </Link>
         <Link
-          href="#testimonials"
+          href={"#testimonials"}
           className="text-sm font-medium hover:underline underline-offset-4"
           prefetch={false}
         >
@@ -44,22 +40,7 @@ export default function Navbar() {
         >
           Download
         </Link>
-
-        {status === "authenticated" && (
-          <div className="hidden sm:inline">
-            <Profile />
-          </div>
-        )}
-        {status === "loading" && (
-          <div className="w-5 h-5 border-2 border-primary rounded-full animate-spin border-t-transparent"></div>
-        )}
-        {status === "unauthenticated" && (
-          <Link href={"/signin"}>
-            <Button variant="outline" size="sm" className="text-sm  font-medium">
-              Sign In
-            </Button>
-          </Link>
-        )}
+        <ProfileIsAuth />
       </nav>
       <NavbarMobileUser />
     </header>

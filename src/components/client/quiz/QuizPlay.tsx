@@ -12,15 +12,16 @@ export default function QuizPlay() {
     handleSubmit,
     score,
     time,
-    countDown,
+    countDownTime,
   } = usePlayQuiz();
 
   return (
     <>
-      {countDown ? (
+      {countDownTime > 0 ? (
         <div className="flex gap-3 items-center justify-center">
-          <div className="w-8 h-8 border-4 border-primary rounded-full animate-spin border-t-transparent"></div>
-          <h1 className="text-3xl text-primary font-bold">Starting Quizium...</h1>
+          <h1 className="text-3xl text-primary font-bold">
+            Starting Quizium in {countDownTime}
+          </h1>
         </div>
       ) : currentQuestion < questions.length && time > 0 ? (
         <div className="bg-card rounded-lg shadow-lg p-8 w-full max-w-md">
@@ -78,7 +79,8 @@ export default function QuizPlay() {
             </Link>
           </div>
         </div>
-      )}
+      )
+      }
     </>
   );
 }

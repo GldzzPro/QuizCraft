@@ -6,9 +6,8 @@ export function percentageNumber(num: number) {
   }).format(num / 100);
 }
 
-export function formatDate(dateString: string) {
+export function formatDate(dateString: string | Date) {
   const date = new Date(dateString);
-
   return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -27,14 +26,11 @@ export const toMinutes = (num: number) =>
     ? `${num / 60} min`
     : `${Math.floor(num / 60)} min ${num % 60} sec`;
 
-
-export const removeUselessChars = (str: string[])=>{
+export const removeUselessChars = (str: string[]) => {
   const isCuid = (segment: string): boolean => {
     const cuidRegex = /^[a-zA-Z0-9]{25}$/;
     return cuidRegex.test(segment);
   };
-  
-  return str.filter(
-    (path) => !path.startsWith("create") && !isCuid(path)
-  );
-}
+
+  return str.filter((path) => !path.startsWith("create") && !isCuid(path));
+};

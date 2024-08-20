@@ -3,5 +3,7 @@ export default function QuizViewPage({
 }: {
   params: { slug: string };
 }) {
-  return <div>{slug}</div>;
+  return <div>
+    tes
+  </div>;
 }

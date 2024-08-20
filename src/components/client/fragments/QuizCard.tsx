@@ -7,29 +7,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { toast } from "@/components/ui/use-toast";
 import { capitalizeFirstLetter } from "@/helpers/formatData";
-import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import useIsAuth from "../useIsAuth";
 import ButtonQuizPath from "../core/ButtonQuizPath";
+import DialogCard from "../quiz/card/DialogCard";
 
 export default function QuizCard({
   id,
   title,
   description,
   difficulty,
+  duration,
   questions,
 }: {
   id: string;
   title: string;
+  duration: number;
   description: string;
   difficulty: string;
   questions: any[];
 }) {
-
   return (
     <Card key={id}>
       <CardHeader>
@@ -61,10 +57,17 @@ export default function QuizCard({
         </div>
       </CardContent>
       <CardFooter className="flex justify-between flex-row-reverse">
-       <ButtonQuizPath id={id} />
-        <Link href={`quiz/view/${id}`}>
+        <ButtonQuizPath id={id} />
+        <DialogCard
+        duration={duration}
+          title={title}
+          description={description}
+          difficulty={difficulty}
+          questions={questions}
+          id={id}
+        >
           <Button variant={"secondary"}>View Quiz</Button>
-        </Link>
+        </DialogCard>
       </CardFooter>
     </Card>
   );

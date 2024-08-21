@@ -18,10 +18,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import useIsAuth from "../useIsAuth";
 
 const NavbarMobileUser = () => {
   const pathname = usePathname();
-
+  const { handlePath, isLoading } = useIsAuth({
+    currentPath: "/rank",
+    id: "",
+  });
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -34,13 +38,13 @@ const NavbarMobileUser = () => {
         <nav className="grid gap-6 text-lg font-medium">
           <SheetTrigger asChild>
             <Link
-              href="/dashboard"
+              href="/"
               className={`group flex h-10 w-10 shrink-0 items-center bg-primary text-primary-foreground justify-center gap-2 rounded-full  text-lg font-semibold md:text-base`}
               prefetch={false}
             >
               <PuzzleIcon
                 className={`h-5 w-5 transition-all ${
-                  pathname === "/dashboard" ? "scale-110" : ""
+                  pathname === "/" ? "scale-110" : ""
                 }`}
               />
             </Link>
@@ -48,48 +52,47 @@ const NavbarMobileUser = () => {
 
           <SheetTrigger asChild>
             <Link
-              href="/dashboard"
+              href="/"
               className={`flex items-center gap-4 px-2.5 ${
-                pathname === "/dashboard"
-                  ? "text-primary/80"
-                  : "text-primary"
+                pathname === "/dashboard" ? "text-primary/80" : "text-primary"
               } hover:text-foreground`}
               prefetch={false}
             >
-              <LayoutDashboardIcon
-                className={`h-4 w-4 transition-all  ${
-                  pathname === "/dashboard" ? "text-primary/80" : "text-primary"
-                }`}
-              />
-              Dashboard
+              Home{" "}
             </Link>
           </SheetTrigger>
           <SheetTrigger asChild>
             <Link
-              href="/dashboard/users"
+              href="/quiz"
               className={`flex items-center gap-4 px-2.5 ${
-                pathname === "/dashboard/users"
-                  ? "text-primary/80"
-                  : "text-primary"
+                pathname === "/quiz" ? "text-primary/80" : "text-primary"
               } hover:text-foreground`}
               prefetch={false}
             >
-              <UsersIcon className="h-5 w-5" />
-              Users
+              Play Quiz
             </Link>
           </SheetTrigger>
           <SheetTrigger asChild>
             <Link
-              href="/dashboard/quizzes"
+              href="/rank"
+              onClick={handlePath}
               className={`flex items-center gap-4 px-2.5 ${
-                pathname === "/dashboard/quizzes"
-                  ? "text-primary/80"
-                  : "text-primary"
+                pathname === "/rank" ? "text-primary/80" : "text-primary"
               } hover:text-foreground`}
               prefetch={false}
             >
-              <QuoteIcon className="h-5 w-5" />
-              Quizzes
+              Rank
+            </Link>
+          </SheetTrigger>
+          <SheetTrigger asChild>
+            <Link
+              href="/feedback"
+              className={`flex items-center gap-4 px-2.5 ${
+                pathname === "/feedback" ? "text-primary/80" : "text-primary"
+              } hover:text-foreground`}
+              prefetch={false}
+            >
+              Feedback
             </Link>
           </SheetTrigger>
           <Link

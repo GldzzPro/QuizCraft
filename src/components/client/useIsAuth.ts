@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { useToast } from '../ui/use-toast';
 
-const useIsAuth = ({quizId}:{quizId: string}) => {
+const useIsAuth = ({currentPath,id}:{currentPath: string,id: string}) => {
     const {toast} = useToast();
     const router = useRouter();
     const { data: session, status } = useSession();
@@ -20,7 +20,7 @@ const useIsAuth = ({quizId}:{quizId: string}) => {
       }
   
       if (status === "authenticated") {
-        router.push(`/quiz/${quizId}`);
+        router.push(`${currentPath}/${id}`);
         setIsLoading(false)
       }
       setIsLoading(false)

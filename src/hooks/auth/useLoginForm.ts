@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,6 +16,7 @@ const LoginFormSchema = z.object({
 });
 
 export default function useLoginForm() {
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const form = useForm<z.infer<typeof LoginFormSchema>>({
     resolver: zodResolver(LoginFormSchema),
@@ -36,7 +37,7 @@ export default function useLoginForm() {
         password,
         redirect: false,
       });
-
+      
 
       if (result?.error) {
         toast({

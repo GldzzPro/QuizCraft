@@ -1,6 +1,7 @@
 import { getALlDetailUser } from "@/repositories/user.repository";
 import CreateButton from "@/components/admin/core/CreateButton";
 import TableDashboardUser from "@/components/admin/user/table/TableUserPages";
+import { columns } from "@/components/admin/user/table/Colums";
 
 export default async function UsersPage() {
   const users = await getALlDetailUser();
@@ -12,7 +13,7 @@ export default async function UsersPage() {
        <CreateButton path={"/users/create"} text={"Users"}/>
       </div>
       <div className="rounded overflow-hidden flex-grow">
-        <TableDashboardUser users={users} />
+        <TableDashboardUser columns={columns} data={users} />
       </div>
     </>
   );

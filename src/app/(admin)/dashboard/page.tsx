@@ -30,7 +30,7 @@ export default async function DasboardPages() {
           <div className="flex-grow overflow-x-auto">
             <h1 className="text-xl md:text-4xl font-bold sm:hidden mb-4">Users: </h1>
             {users.length > 0 ? (
-              <TableDashboard />
+              <TableDashboard users={users} />
             ) : (
               <div className="mt-14 grid place-items-center">
                 <h1 className="text-muted-foreground text-lg">No users</h1>

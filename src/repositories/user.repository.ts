@@ -55,6 +55,9 @@ export async function getParticularDetailUser() {
   return calculatedScores;
 }
 
+
+
+
 export async function getUserById(id: string) {
   const user = await prisma.user.findUnique({
     where: { id },
@@ -105,8 +108,9 @@ export async function getALlDetailUser() {
       updatedAt: true,
     },
   });
-  return users
+  return users;
 }
+
 
 // Function to create a user
 export async function createUser({

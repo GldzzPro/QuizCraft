@@ -9,7 +9,7 @@ export default function useDeleteScore({ userId }: { userId: string }) {
 
   const handleDelete = async (quizId: string) => {
     try {
-      const result = await deleteScoresByUserId( quizId);
+      const result = await deleteScoresByUserId(quizId);
       if (result) {
         toast({
           title: "Success",

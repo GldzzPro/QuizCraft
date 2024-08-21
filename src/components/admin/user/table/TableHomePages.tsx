@@ -11,8 +11,15 @@ import Link from "next/link";
 import { getParticularDetailUser } from "@/repositories/user.repository";
 import { percentageNumber } from "@/helpers/formatData";
 
-export default async function TableDashboard() {
-  const users = await getParticularDetailUser();
+
+type UsersProps = {
+  id: string;
+  username: string;
+  email: string;
+  totalScore: number;
+}[]
+export default async function TableDashboard({
+  users}: { users: UsersProps }) {
 
   return (
     <div className="flex-grow">

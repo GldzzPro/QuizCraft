@@ -15,6 +15,7 @@ import {
   UsersIcon,
   PuzzleIcon,
   HelpCircleIcon,
+  BrainCircuitIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -84,7 +85,7 @@ const Sidebar = () => {
                 } text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base `}
                 prefetch={false}
               >
-                <QuoteIcon
+                <BrainCircuitIcon
                   className={`h-4 w-4 transition-all group-hover:scale-110 ${
                     pathname === "/dashboard/quizzes"
                       ? "text-primary-foreground scale-110"

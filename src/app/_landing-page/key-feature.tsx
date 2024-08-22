@@ -13,7 +13,7 @@ export default function KeyFeatures() {
               Anywhere Learning, Anytime Progress
             </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Our quiz app offers a range of features to help you learn, grow,
+              Our Quizium offers a range of features to help you learn, grow,
               and succeed.
             </p>
           </div>

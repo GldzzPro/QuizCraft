@@ -5,11 +5,14 @@ import { useState } from "react";
 
 export default function useDeleteQuiz({ id }: { id: string }) {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-
   const router = useRouter();
-  const handleDelete = async (quizId:string) => {
+
+  const handleDelete = async () => {
     try {
-      const result = await deleteQuizById({id: quizId});
+      console.log("Deleting quiz with ID:", id);
+      
+      const result = await deleteQuizById({ id });
+      
       if (result) {
         toast({
           title: "Success",
@@ -18,7 +21,7 @@ export default function useDeleteQuiz({ id }: { id: string }) {
         router.refresh();
       }
     } catch (error) {
-      console.error("Error deleting user:", error);
+      console.error("Error deleting quiz:", error);
     }
   };
 

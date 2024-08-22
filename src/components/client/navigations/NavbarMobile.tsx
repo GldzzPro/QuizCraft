@@ -14,11 +14,13 @@ import {
   SettingsIcon,
   MenuIcon,
   SquareTerminalIcon,
-  PuzzleIcon, // Updated to match Sidebar
+  PuzzleIcon,
+  LogOutIcon, // Updated to match Sidebar
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import useIsAuth from "../useIsAuth";
+import Profile from "@/components/Profile";
 
 const NavbarMobileUser = () => {
   const pathname = usePathname();
@@ -36,19 +38,9 @@ const NavbarMobileUser = () => {
       </SheetTrigger>
       <SheetContent side="right" className="sm:max-w-xs">
         <nav className="grid gap-6 text-lg font-medium">
-          <SheetTrigger asChild>
-            <Link
-              href="/"
-              className={`group flex h-10 w-10 shrink-0 items-center bg-primary text-primary-foreground justify-center gap-2 rounded-full  text-lg font-semibold md:text-base`}
-              prefetch={false}
-            >
-              <PuzzleIcon
-                className={`h-5 w-5 transition-all ${
-                  pathname === "/" ? "scale-110" : ""
-                }`}
-              />
-            </Link>
-          </SheetTrigger>
+          <div>
+            <Profile />
+          </div>
 
           <SheetTrigger asChild>
             <Link
@@ -97,15 +89,11 @@ const NavbarMobileUser = () => {
           </SheetTrigger>
           <Link
             href="#"
-            className={`flex items-center gap-4 px-2.5 ${
-              pathname === "#"
-                ? "text-primary-foreground"
-                : "text-muted-foreground"
-            } hover:text-foreground`}
+            className={`flex items-center gap-4 px-2.5 hover:text-foreground`}
             prefetch={false}
           >
-            <SettingsIcon className="h-5 w-5" />
-            Settings
+            <LogOutIcon className="h-5 w-5" />
+            Logout
           </Link>
         </nav>
       </SheetContent>

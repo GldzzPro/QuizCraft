@@ -20,7 +20,7 @@ export default function RankPage({
   user: UsersProps
 }) {
   const [users, setUsers] = useState<UsersProps>([]);
-  const {data:session} = useSession();
+  const {data:session, status} = useSession();
   const [currentUserId, setCurrentUserId] = useState(session?.user?.id) // Assuming the id is a string
 
   useEffect(() => {
@@ -64,35 +64,59 @@ export default function RankPage({
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
-                <tr
-                  key={user.id}
-                  className={`border-b last:border-b-0 ${
-                    user.id === currentUserId ? 'bg-primary/10' : ''
-                  }`}
-                >
+              {status === "authenticated" && (
+                users.map((user, index) => (
+                  <tr
+                    key={user.id}
+                    className={`border-b last:border-b-0 ${
+                      user.id === currentUserId ? 'bg-primary/10' : ''
+                    }`}
+                  >
+                    <td className="py-3 pr-4">
+                      <span className="font-semibold">{index + 1}</span>
+                    </td>
+                    <td className="py-3 pr-4">
+                      <div className="flex items-center">
+                        <Avatar className="h-10 w-10 mr-3">
+                          <AvatarImage src={"https://github.com/shadcn.png"} alt={"Shadcn"} />
+                          <AvatarFallback>{user.username.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">{user.username}</p>
+                          {user.id === currentUserId && (
+                            <Badge variant="secondary" className="mt-1">You</Badge>
+                          )}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 pr-4">
+                      <span className="font-semibold">{user.totalScore}</span>
+                    </td>
+                  </tr>
+                ))
+              )}
+              {status === "unauthenticated" && (
+                <tr>
                   <td className="py-3 pr-4">
-                    <span className="font-semibold">{index + 1}</span>
+                    <span className="font-semibold">N/A</span>
                   </td>
                   <td className="py-3 pr-4">
                     <div className="flex items-center">
                       <Avatar className="h-10 w-10 mr-3">
                         <AvatarImage src={"https://github.com/shadcn.png"} alt={"Shadcn"} />
-                        <AvatarFallback>{user.username.charAt(0)}</AvatarFallback>
+                        <AvatarFallback>N/A</AvatarFallback>
                       </Avatar>
+
                       <div>
-                        <p className="font-medium">{user.username}</p>
-                        {user.id === currentUserId && (
-                          <Badge variant="secondary" className="mt-1">You</Badge>
-                        )}
+                        <p className="font-medium">N/A</p>
                       </div>
                     </div>
                   </td>
                   <td className="py-3 pr-4">
-                    <span className="font-semibold">{user.totalScore}</span>
+                    <span className="font-semibold">N/A</span>
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </ScrollArea>

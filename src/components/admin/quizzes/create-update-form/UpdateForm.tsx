@@ -110,7 +110,7 @@ const UpdateQuizForm = ({
           name="duration"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Duration (in minutes)</FormLabel>
+              <FormLabel>Duration (in seconds)</FormLabel>
               <FormControl>
                 <Input type="number" placeholder="1" {...field} required />
               </FormControl>

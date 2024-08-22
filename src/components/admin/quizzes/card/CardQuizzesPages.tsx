@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React  from "react";
 import {
   Card,
   CardContent,
@@ -13,8 +13,6 @@ import { Difficulty } from "@prisma/client";
 import { Button } from "../../../ui/button";
 import PopOver from "../../core/AlertDialog";
 import useDeleteQuiz from "@/hooks/quizzes/useDeleteQuiz";
-import { capitalizeFirstLetter } from "@/helpers/formatData";
-import { EraserIcon, PencilIcon } from "lucide-react";
 const CardQuizzes = (quiz: {
   id: string;
   title: string;
@@ -46,7 +44,7 @@ const CardQuizzes = (quiz: {
         <CardContent>
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm font-semibold text-muted-foreground">
+              <div className="text-sm font-medium text-muted-foreground">
                 Questions
               </div>
               {quiz.questions.length > 0 ? (
@@ -64,17 +62,17 @@ const CardQuizzes = (quiz: {
                 Difficulty
               </div>
               <div className="text-2xl font-bold">
-                {capitalizeFirstLetter(quiz.difficulty)}
+                {/* {capitalizeFirstLetter(quiz.difficulty)} */}
               </div>
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex justify-end gap-2 items-center">
+        <CardFooter className="flex justify-between">
           <Link href={`/dashboard/quizzes/${quiz.id}`}>
-            <Button variant="default" size={"icon"}><PencilIcon/></Button>
+            <Button variant="default">View Details</Button>
           </Link>
-          <Button variant="destructive" size={"icon"} onClick={handleDeleteClick}>
-            <EraserIcon/>
+          <Button variant="destructive" onClick={handleDeleteClick}>
+            Delete
           </Button>
         </CardFooter>
       </Card>

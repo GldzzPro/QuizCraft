@@ -13,7 +13,7 @@ export default function Testimonial() {
               What Our Users Say
             </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Hear from real people who have used our quiz app and loved it.
+              Hear from real people who have used our Quizium app and loved it.
             </p>
           </div>
         </div>
@@ -59,10 +59,10 @@ export default function Testimonial() {
               data-aos-duration="900">
               &quot;I can&apos;t imagine learning without this app!&quot;
             </div>
-            <p className="text-muted-foreground" data-aos="fade-left" 
+            <p className="text-muted-foreground text-end" data-aos="fade-left" 
               data-aos-duration="800">
               &quot;As a busy professional, I was struggling to find time to
-              learn new skills. The quiz app has made it so much easier to fit
+              learn new skills. The Quizium app has made it so much easier to fit
               learning into my schedule. The leaderboards are also a great way
               to stay motivated.&quot;
             </p>

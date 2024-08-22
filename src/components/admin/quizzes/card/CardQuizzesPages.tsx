@@ -13,6 +13,7 @@ import { Difficulty } from "@prisma/client";
 import { Button } from "../../../ui/button";
 import PopOver from "../../core/AlertDialog";
 import useDeleteQuiz from "@/hooks/quizzes/useDeleteQuiz";
+import { capitalizeFirstLetter } from "@/helpers/formatData";
 const CardQuizzes = (quiz: {
   id: string;
   title: string;
@@ -29,7 +30,7 @@ const CardQuizzes = (quiz: {
   } = useDeleteQuiz({ id: quiz.id });
   return (
     <PopOver
-      onDelete={() => handleDelete(quiz.id)}
+      onDelete={handleDelete}
       isAlertOpen={isAlertOpen}
       setIsAlertOpen={setIsAlertOpen}
       handleCloseAlert={handleCloseAlert}
@@ -62,7 +63,7 @@ const CardQuizzes = (quiz: {
                 Difficulty
               </div>
               <div className="text-2xl font-bold">
-                {/* {capitalizeFirstLetter(quiz.difficulty)} */}
+                {capitalizeFirstLetter(quiz.difficulty)}
               </div>
             </div>
           </div>

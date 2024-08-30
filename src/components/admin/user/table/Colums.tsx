@@ -62,7 +62,7 @@ export const columns: ColumnDef<UserProps>[] = [
       const maxScores = scores.filter((s) => s.score > 0);
 
       return (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap text-center gap-2">
           {scores.length > 0 ? (
             <>
               {maxScores.slice(0, 2).map(({ score, quiz: { title } }) => (
@@ -86,7 +86,7 @@ export const columns: ColumnDef<UserProps>[] = [
     header: "Created At",
     cell: ({ row }) => {
       const createdAt = row.getValue("createdAt") as Date;
-      return formatDate(createdAt);
+      return <span className="truncate">{formatDate(createdAt)}</span>
     },
   },
   {
@@ -94,7 +94,7 @@ export const columns: ColumnDef<UserProps>[] = [
     header: "Updated At",
     cell: ({ row }) => {
       const updatedAt = row.getValue("updatedAt") as Date;
-      return formatDate(updatedAt);
+      return <span className="truncate">{formatDate(updatedAt)}</span>
     },
   },
   {

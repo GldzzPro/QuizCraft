@@ -51,9 +51,7 @@ const NavbarMobile = () => {
             <Link
               href="/dashboard"
               className={`flex items-center gap-4 px-2.5 ${
-                pathname === "/dashboard"
-                  ? "text-primary/80"
-                  : "text-primary"
+                pathname === "/dashboard" ? "text-primary/80" : "text-primary"
               } hover:text-foreground`}
               prefetch={false}
             >
@@ -93,20 +91,22 @@ const NavbarMobile = () => {
               Quizzes
             </Link>
           </SheetTrigger>
-          <Link
-            href="/dashboard/about"
-            className={`flex items-center gap-4 px-2.5 ${
-              pathname === "#"
-                ? "text-primary-foreground"
-                : "text-muted-foreground"
-            } hover:text-foreground`}
-            prefetch={false}
-          >
-           <HelpCircleIcon className="h-6 w-6" />
-           <span className="sr-only">About & Help</span>
+          <SheetTrigger>
+            <Link
+              href="/dashboard/about"
+              className={`flex items-center gap-4 px-2.5 ${
+                pathname === "#"
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground"
+              } hover:text-foreground`}
+              prefetch={false}
+            >
+              <HelpCircleIcon className="h-6 w-6" />
+              <span className="sr-only">About & Help</span>
 
-           <p className="">About & Help</p>
-          </Link>
+              <p className="">About & Help</p>
+            </Link>
+          </SheetTrigger>
         </nav>
       </SheetContent>
     </Sheet>

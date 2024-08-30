@@ -21,7 +21,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
 
   return (
     <>
-      <div className="flex flex-col min-h-[100dvh]">
+      <div className="flex flex-col min-h-[100dvh] overflow-x-hidden">
         <main className="flex-1">
           {!hideNavigation && <Navbar />}
           {children}

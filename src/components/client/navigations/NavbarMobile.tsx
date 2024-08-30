@@ -15,19 +15,23 @@ import {
   MenuIcon,
   SquareTerminalIcon,
   PuzzleIcon,
-  LogOutIcon, // Updated to match Sidebar
+  LogOutIcon,
+  LogInIcon, // Updated to match Sidebar
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import useIsAuth from "../useIsAuth";
 import Profile from "@/components/Profile";
+import { signIn, signOut } from "next-auth/react";
+import { toast } from "@/components/ui/use-toast";
 
 const NavbarMobileUser = () => {
   const pathname = usePathname();
-  const { handlePath, isLoading } = useIsAuth({
+  const { handlePath, isLoading, handleLogout, status } = useIsAuth({
     currentPath: "/rank",
     id: "",
   });
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -37,10 +41,8 @@ const NavbarMobileUser = () => {
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="sm:max-w-xs">
-        <nav className="grid gap-6 text-lg font-medium">
-          <div>
-            <Profile />
-          </div>
+        <nav className="grid gap-7 text-lg font-medium">
+          <div>{status === "authenticated" && <Profile />}</div>
 
           <SheetTrigger asChild>
             <Link
@@ -87,14 +89,25 @@ const NavbarMobileUser = () => {
               Feedback
             </Link>
           </SheetTrigger>
-          <Link
-            href="#"
-            className={`flex items-center gap-4 px-2.5 hover:text-foreground`}
-            prefetch={false}
-          >
-            <LogOutIcon className="h-5 w-5" />
-            Logout
-          </Link>
+          {status === "authenticated" ? (
+            <Button
+              onClick={handleLogout}
+              variant={"outline"}
+              className={`flex items-center gap-4 px-2.5 hover:text-foreground`}
+            >
+              <LogOutIcon className="h-5 w-5" />
+              Logout
+            </Button>
+          ) : (
+            <Button
+              onClick={() => signIn()}
+              variant={"outline"}
+              className={`flex items-center gap-4 `}
+            >
+              <LogInIcon className="h-5 w-5" />
+              Login
+            </Button>
+          )}
         </nav>
       </SheetContent>
     </Sheet>

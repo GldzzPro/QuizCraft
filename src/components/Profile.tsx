@@ -17,9 +17,9 @@ const Profile: React.FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex gap-2 text-right items-center">
-          <span>
-            <h1 className="text-sm font-semibold">
+        <div className="flex flex-row-reverse sm:flex-row text-left sm:text-right justify-end items-center gap-3">
+          <span className="">
+            <h1 className="text-sm font-semibold text-black">
               {status === "loading" ? (
                 <LoaderCircleIcon className="animate-spin h-4 w-4" />
               ) : (

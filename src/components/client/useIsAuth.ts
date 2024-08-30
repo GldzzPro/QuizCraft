@@ -1,4 +1,4 @@
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { useToast } from '../ui/use-toast';
@@ -25,9 +25,23 @@ const useIsAuth = ({currentPath,id}:{currentPath: string,id: string}) => {
       }
       setIsLoading(false)
     };
+
+    const handleLogout = () => {
+      signOut({
+        redirect: true,
+        callbackUrl: "/",
+      }).then(() => {
+        toast({
+          title: "Logged out",
+          description: "You have been logged out",
+        });
+      });
+    };
     return {
         handlePath,
-        isLoading
+        isLoading,
+        handleLogout,
+        status
     }
 }
 

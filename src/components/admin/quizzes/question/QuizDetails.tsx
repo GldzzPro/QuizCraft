@@ -56,7 +56,7 @@ function QuestionCard({ question }: QuestionCardProps) {
     setIsAlertOpen,
     handleDeleteClick,
     handleDelete,
-  } = useDeleteQuest({ id: question.id });
+  } = useDeleteQuest();
 
   return (
     <PopOver

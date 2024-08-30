@@ -3,11 +3,11 @@ import { deleteSpecificQuestionByQuizId } from "@/repositories/quiz.repository";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function useDeleteQuest({ id }: { id: string }) {
+export default function useDeleteQuest() {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const router = useRouter();
 
-  const handleDelete = async () => {
+  const handleDelete = async (id: string) => {
     try {
       const result = await deleteSpecificQuestionByQuizId(id);
       if (result) {

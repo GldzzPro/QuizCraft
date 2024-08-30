@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { createUser, findUserEmail } from "@/repositories/user.repository";
 
 import { Role } from "@prisma/client";
-import { hashPassword } from "../auth/register/route";
+import { hashPassword } from "@/lib/auth.utils";
+
 export async function POST(req: NextRequest) {
   const { email, username, password, confirmPassword, roles, score } =
     await req.json();

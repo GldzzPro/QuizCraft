@@ -7,6 +7,7 @@ import {
   PolarRadiusAxis,
   RadialBar,
   RadialBarChart,
+  LabelProps,
 } from "recharts";
 
 import {
@@ -68,7 +69,8 @@ export default function Charts({ totalUsers }: any) {
             <RadialBar dataKey="visitors" background cornerRadius={10} />
             <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
               <Label
-                content={({ viewBox }: { viewBox: any }) => {
+                content={(props: LabelProps) => {
+                  const { viewBox } = props;
                   if (viewBox && "cx" in viewBox && "cy" in viewBox) {
                     return (
                       <text

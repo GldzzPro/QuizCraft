@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import usePlayQuiz from "./usePlayQuiz";
+import usePlayQuiz from "../../../hooks/quizzes/usePlayQuiz";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 

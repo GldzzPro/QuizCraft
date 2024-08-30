@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import usePlayQuiz from "./usePlayQuiz";
+import usePlayQuiz from "../../../hooks/quizzes/usePlayQuiz";
 import Link from "next/link";
 
 export default function QuizPlay() {

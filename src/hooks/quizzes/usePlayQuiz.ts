@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 type Answer = {
   id: string;
@@ -26,25 +26,21 @@ export default function usePlayQuiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [countDown, setCountDown] = useState(false);
   const [countDownTime, setCountDownTime] = useState(5);
+
   useEffect(() => {
     if (quizId) {
       (async () => {
-        // setCountDown(true);
         try {
           const res = await fetch(`/api/quiz/${quizId}`);
           if (!res.ok) {
             throw new Error("Failed to fetch data");
           }
           const storeData = await res.json();
-          // setCountDown(false);
           setQuestions(storeData.questions);
           setTime(storeData.duration);
         } catch (error) {
           console.log(error);
-        } 
-        // finally {
-        //   setCountDown(false);
-        // }
+        }
       })();
     }
   }, [quizId]);
@@ -58,18 +54,7 @@ export default function usePlayQuiz() {
     }
   }, [countDownTime]);
 
-  useEffect(() => {
-    if (time > 0 && currentQuestion < questions.length) {
-      const timer = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
-      }, 1000);
-      return () => clearInterval(timer);
-    } else if (time === 0 || currentQuestion >= questions.length) {
-      submitScore();
-    }
-  }, [time, currentQuestion]);
-
-  const submitScore = async () => {
+  const submitScore = useCallback(async () => {
     try {
       const res = await fetch(`/api/quiz/submit`, {
         method: "POST",
@@ -79,7 +64,7 @@ export default function usePlayQuiz() {
         body: JSON.stringify({
           userId,
           quizId,
-          score, // Final score is sent to the backend
+          score,
         }),
       });
       if (!res.ok) {
@@ -88,7 +73,18 @@ export default function usePlayQuiz() {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [userId, quizId, score]);
+
+  useEffect(() => {
+    if (time > 0 && currentQuestion < questions.length) {
+      const timer = setInterval(() => {
+        setTime((prevTime) => prevTime - 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    } else if (time === 0 || currentQuestion >= questions.length) {
+      submitScore();
+    }
+  }, [time, currentQuestion, questions.length, submitScore]);
 
   const handleAnswerChange = (answer: Answer) => {
     setSelectAnswer(answer);

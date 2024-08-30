@@ -61,7 +61,7 @@ const ProfileAdmin: React.FC = () => {
         </Link>
         <DropdownMenuItem
           onClick={handleLogout}
-          className="cursor-pointer hidden"
+          className="cursor-pointer hidden sm:block"
         >
           Logout
         </DropdownMenuItem>

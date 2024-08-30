@@ -1,11 +1,10 @@
 import Breadcrumbs from "@/components/admin/core/Breadcrumbs";
-import Profile from "@/components/Profile";
 import NavbarMobile from "@/components/admin/fragments/navigations/NavbarMobile";
 import { getServerSession } from "next-auth";
-
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/authOptions";
 import Sidebar from "@/components/admin/fragments/navigations/Sidebar";
+import ProfileAdmin from "@/components/admin/core/ProfileAdmin";
 
 export default async function DashboardLayout({
   children,
@@ -30,7 +29,7 @@ export default async function DashboardLayout({
           <NavbarMobile />
           <Breadcrumbs />
         
-          <Profile />
+          <ProfileAdmin />
         </header>
         <main className=" p-4 sm:px-6 sm:py-0 ">{children}</main>
       </div>

@@ -29,7 +29,7 @@ const ProfileAdmin: React.FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex flex-row-reverse gap-3 items-center">
+        <div className="flex flex-row gap-3 items-center text-right">
           <span className="">
             <h1 className="text-sm font-semibold text-black">
               {status === "loading" ? (

@@ -20,7 +20,7 @@ export default function QuizPlay() {
       {countDownTime > 0 ? (
         <div className="flex gap-3 items-center justify-center">
           <h1 className="text-3xl text-primary font-bold">
-            Starting Quizium in {countDownTime}
+            Starting QuizCraft in {countDownTime}
           </h1>
         </div>
       ) : currentQuestion < questions.length && time > 0 ? (

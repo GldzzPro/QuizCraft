@@ -2,7 +2,7 @@
 import ProfileIsAuth from "@/components/client/core/ProfileIsAuth";
 import NavbarMobileUser from "@/components/client/navigations/NavbarMobile";
 import useIsAuth from "@/components/client/useIsAuth";
-import { PuzzleIcon } from "lucide-react";
+import { PuzzleIcon, Sparkles } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -14,8 +14,10 @@ export default function Navbar() {
   return (
     <header className="px-4 lg:px-6 h-14 flex justify-between  items-center">
       <a href="/" className="flex items-center justify-center">
-        <PuzzleIcon className="h-6 w-6" />
-        <span className="sr-only">Quiz App</span>
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-6 w-6 text-primary" />
+          <span className="text-xl font-bold">QuizCraft</span>
+        </div>
       </a>
       <nav className="ml-auto hidden sm:flex gap-4 items-center sm:gap-6">
         <Link

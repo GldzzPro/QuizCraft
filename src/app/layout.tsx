@@ -11,8 +11,8 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 export const metadata: Metadata = {
-  title: "Quizium",
-  description: "quizium",
+  title: "QuizCraft",
+  description: "QuizCraft",
   icons: {
     icon: "/favicon.ico",
   },

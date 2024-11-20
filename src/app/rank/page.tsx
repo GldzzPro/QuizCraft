@@ -1,3 +1,4 @@
+"use client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RankingsTable } from "@/components/ui/rankings-table";
 import { UserData, RankingData } from "./types";

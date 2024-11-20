@@ -12,13 +12,13 @@ export default function QuizResultsLayout({
       <Tabs defaultValue="all" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="all" asChild>
-            <Link href="/quiz-results">All Quizzes</Link>
+            <Link href="/rank">All Quizzes</Link>
           </TabsTrigger>
           <TabsTrigger value="quiz" asChild>
-            <Link href="/quiz-results/by-quiz">By Quiz</Link>
+            <Link href="/rank/by-quiz">By Quiz</Link>
           </TabsTrigger>
           <TabsTrigger value="period" asChild>
-            <Link href="/quiz-results/by-period">By Period</Link>
+            <Link href="/rank/by-period">By Period</Link>
           </TabsTrigger>
         </TabsList>
         {children}

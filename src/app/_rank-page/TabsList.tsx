@@ -1,11 +1,12 @@
 "use client";
+import React from "react";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
-import React from "react";
 
 export const TabsListLayout = ({ children }: React.PropsWithChildren) => {
+  return <>{children}</>;
   const segment = useSelectedLayoutSegment();
 
   // Map the segment to the tab value

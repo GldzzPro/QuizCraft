@@ -10,7 +10,7 @@ export interface UserData {
 }
 
 export interface RankingData {
-    id: number;
+    id: string;
     name: string;
     score: number;
 }   

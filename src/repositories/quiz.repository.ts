@@ -3,7 +3,8 @@ import prisma from "@/lib/prisma";
 import { Difficulty } from "@prisma/client";
 
 export const getAllQuizzes = async () => {
-  return await prisma.quiz.findMany({
+  const quizzes = await prisma.quiz.findMany({
+    
     select: {
       id: true,
       title: true,
@@ -13,7 +14,10 @@ export const getAllQuizzes = async () => {
       createdAt: true,
       questions: true,
     },
+
   });
+  console.log("Fetched Quizzes:", { quizzes });
+  return quizzes
 };
 
 
@@ -197,7 +201,7 @@ export const updateSpecificQuestionByQuizId = async ({
       text,
       answers: {
         update: answers.map((answer) => ({
-          where: { id: answer.id }, 
+          where: { id: answer.id },
           data: {
             text: answer.text,
             isCorrect: answer.isCorrect,
@@ -220,10 +224,10 @@ export const getScoreByUserId = async (userId: string) => {
   })
 }
 
-export const deleteScoresByUserId = async ( quizId: string) => {
+export const deleteScoresByUserId = async (quizId: string) => {
   return await prisma.score.deleteMany({
     where: {
-      
+
       quizId,
     },
   });
